@@ -27,5 +27,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 // Cashier-only routes
 Route::middleware(['auth', 'role:cashier'])->prefix('cashier')->name('cashier.')->group(function () {
     Route::get('/dashboard', fn() => view('cashier.dashboard'))->name('dashboard');
-    Route::get('/view-item', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::get('/products', [CartController::class, 'showProducts'])->name('products.index');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
 });

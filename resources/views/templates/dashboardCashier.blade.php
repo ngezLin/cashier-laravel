@@ -86,7 +86,7 @@
             <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
             <li class="nav-item">
-            <a href="{{ route('cashier.transactions.index') }}" class="nav-link">
+            <a href="{{ route('cashier.products.index') }}" class="nav-link">
                 <i class="fa-solid fa-eye"></i>
                 <p>
                 View Products
