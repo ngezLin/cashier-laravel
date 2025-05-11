@@ -46,7 +46,10 @@
             </tbody>
         </table>
 
-        <a href="#" class="btn btn-success">Checkout</a>
+        <form action="{{ route('cashier.cart.checkout') }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-success">Checkout</button>
+        </form>
     @endif
 </div>
 @endsection
