@@ -32,4 +32,6 @@ Route::middleware(['auth', 'role:cashier'])->prefix('cashier')->name('cashier.')
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::get('/transaction-success/{transaction}', [CartController::class, 'transactionSuccess'])->name('transactions.success');
+
 });

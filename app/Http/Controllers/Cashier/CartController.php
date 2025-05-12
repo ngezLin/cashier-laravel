@@ -63,22 +63,20 @@ class CartController extends Controller
 
         $total = $cartItems->sum(fn($item) => $item->product->sell_price * $item->quantity);
 
-        // Create the transaction
         $transaction = Transaction::create([
             'user_id' => $user->id,
             'total' => $total,
         ]);
 
         foreach ($cartItems as $item) {
-            // Decrease product stock
             $product = $item->product;
+
             if ($product->stock < $item->quantity) {
                 return redirect()->back()->with('error', "Insufficient stock for {$product->product_name}.");
             }
 
             $product->decrement('stock', $item->quantity);
 
-            // Create transaction item
             TransactionItem::create([
                 'transaction_id' => $transaction->id,
                 'product_id' => $product->id,
@@ -87,12 +85,17 @@ class CartController extends Controller
             ]);
         }
 
-        // Clear the cart
         Cart::where('user_id', $user->id)->delete();
 
-        return redirect()->route('cashier.cart.index')->with('success', 'Checkout successful!');
+        // 👇 Redirect to success page
+        return redirect()->route('cashier.transactions.success', ['transaction' => $transaction->id]);
     }
 
 
+    public function transactionSuccess(Transaction $transaction)
+    {
+        $transaction->load('items.product'); // eager load items & products
+        return view('cashier.carts.transactionSuccess', compact('transaction'));
+    }
 
 }
