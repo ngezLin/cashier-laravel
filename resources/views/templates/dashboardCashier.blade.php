@@ -111,16 +111,12 @@
     <!-- /.sidebar -->
     </aside>
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             @yield('content')
         </div>
-        </div><!-- /.container-fluid -->
     </section>
-    <!-- /.content-wrapper -->
 
     <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
