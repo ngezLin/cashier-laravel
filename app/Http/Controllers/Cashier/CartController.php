@@ -52,7 +52,7 @@ class CartController extends Controller
         return view('cashier.carts.viewCart', compact('cartItems'));
     }
 
-    public function checkout()
+    public function checkout(Request $request)
     {
         $user = auth()->user();
         $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
@@ -62,10 +62,22 @@ class CartController extends Controller
         }
 
         $total = $cartItems->sum(fn($item) => $item->product->sell_price * $item->quantity);
+        $customerAmount = $request->input('customer_amount');
 
+        // If the customer amount is less than the total, return an error
+        if ($customerAmount < $total) {
+            return redirect()->back()->with('error', 'The amount given is less than the total.');
+        }
+
+        // Calculate change if customer paid more than the total
+        $change = $customerAmount - $total;
+
+        // Proceed to create the transaction as usual
         $transaction = Transaction::create([
             'user_id' => $user->id,
             'total' => $total,
+            'customer_amount' => $customerAmount,
+            'change' => $change,
         ]);
 
         foreach ($cartItems as $item) {
@@ -87,7 +99,7 @@ class CartController extends Controller
 
         Cart::where('user_id', $user->id)->delete();
 
-        // 👇 Redirect to success page
+        // Redirect to success page
         return redirect()->route('cashier.transactions.success', ['transaction' => $transaction->id]);
     }
 

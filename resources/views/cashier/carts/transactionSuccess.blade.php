@@ -77,6 +77,14 @@
                       <th style="width: 50%">Total:</th>
                       <td>Rp{{ number_format($transaction->total, 0, ',', '.') }}</td>
                     </tr>
+                    <tr>
+                      <th>Amount Given:</th>
+                      <td>Rp{{ number_format($transaction->customer_amount, 0, ',', '.') }}</td>
+                    </tr>
+                    <tr>
+                      <th>Change:</th>
+                      <td>Rp{{ number_format($transaction->change, 0, ',', '.') }}</td>
+                    </tr>
                   </table>
                 </div>
               </div>
