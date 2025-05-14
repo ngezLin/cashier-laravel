@@ -111,12 +111,20 @@
     <!-- /.sidebar -->
     </aside>
 
-    <!-- Content Header (Page header) -->
+    <!-- dashboardCashier.blade.php -->
+    <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
-            @yield('content')
+        @yield('header') {{-- Optional: for page title/breadcrumb --}}
         </div>
     </section>
+
+    <section class="content">
+        <div class="container-fluid">
+        @yield('content')
+        </div>
+    </section>
+    </div>
 
     <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
