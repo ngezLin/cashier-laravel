@@ -46,8 +46,23 @@
             </tbody>
         </table>
 
+        <!-- Payment Form -->
         <form action="{{ route('cashier.cart.checkout') }}" method="POST">
             @csrf
+            <div class="form-group">
+                <label for="paymentMethod">Payment Method</label>
+                <select name="payment_method" id="paymentMethod" class="form-control">
+                    <option value="cash">Cash</option>
+                    <option value="credit_card">Credit Card</option>
+                    <option value="debit_card">Debit Card</option>
+                </select>
+            </div>
+
+    <div class="form-group">
+        <label for="customer_amount">Amount Given</label>
+        <input type="number" name="customer_amount" id="customer_amount" class="form-control" required min="{{ $total }}">
+    </div>
+
             <button type="submit" class="btn btn-success">Checkout</button>
         </form>
     @endif
