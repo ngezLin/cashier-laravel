@@ -64,7 +64,7 @@
             <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
+            <a href="#" class="d-block">Cashier</a>
         </div>
         </div>
 
@@ -90,6 +90,14 @@
                 <i class="fa-solid fa-eye"></i>
                 <p>
                 View Products
+                </p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{{ route('cashier.transactions.index') }}" class="nav-link">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <p>
+                Transaction History
                 </p>
             </a>
             </li>
