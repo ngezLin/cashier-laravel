@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Cashier\CartController;
-// use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Cashier\TransactionController;
 
@@ -34,8 +33,6 @@ Route::middleware(['auth', 'role:cashier'])->prefix('cashier')->name('cashier.')
     Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::get('/transaction-success/{transaction}', [CartController::class, 'transactionSuccess'])->name('transactions.success');
-    // Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
-    // Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
     Route::resource('transactions', TransactionController::class)->only(['index', 'show']);
 
 });

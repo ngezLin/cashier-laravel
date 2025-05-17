@@ -12,16 +12,15 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        // $query = Product::query();
+        $query = Product::query();
 
-        // //search filter
-        // if ($request->has('search')) {
-        //     $search = $request->search;
-        //     $query->where('product_name', 'like', "%{$search}%");
-        // }
+        //search filter
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where('product_name', 'like', "%{$search}%");
+        }
 
-        // $products = $query->get();
-        $product = Product::all();
+        $products = $query->get();
 
         return view('admin.products.index', compact('products'));
     }
