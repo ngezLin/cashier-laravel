@@ -33,7 +33,7 @@
                 <tr>
                   <th>Qty</th>
                   <th>Product</th>
-                  <th>Description</th>
+                  {{-- <th>Description</th> --}}
                   <th>Price</th>
                   <th>Subtotal</th>
                 </tr>
@@ -43,7 +43,7 @@
                   <tr>
                     <td>{{ $item->quantity }}</td>
                     <td>{{ $item->product->product_name }}</td>
-                    <td>{{ $item->product->description ?? '-' }}</td>
+                    {{-- <td>{{ $item->product->description ?? '-' }}</td> --}}
                     <td>Rp{{ number_format($item->price, 0, ',', '.') }}</td>
                     <td>Rp{{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
                   </tr>

@@ -8,15 +8,24 @@ use App\Models\Cart;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use Illuminate\Support\Facades\DB;
+use App\Models\Product;
 
 class CartController extends Controller
 {
 
-    public function showProducts()
+    public function showProducts(Request $request)
     {
-        $products = \App\Models\Product::where('stock', '>', 0)->get();
+        $query = Product::where('stock', '>', 0);
+
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('product_name', 'like', '%' . $request->search . '%');
+        }
+
+        $products = $query->paginate(9)->withQueryString();
+
         return view('cashier.products.index', compact('products'));
     }
+
 
     public function remove($id)
     {
@@ -64,15 +73,12 @@ class CartController extends Controller
         $total = $cartItems->sum(fn($item) => $item->product->sell_price * $item->quantity);
         $customerAmount = $request->input('customer_amount');
 
-        // If the customer amount is less than the total, return an error
         if ($customerAmount < $total) {
             return redirect()->back()->with('error', 'The amount given is less than the total.');
         }
 
-        // Calculate change if customer paid more than the total
         $change = $customerAmount - $total;
 
-        // Proceed to create the transaction as usual
         $transaction = Transaction::create([
             'user_id' => $user->id,
             'total' => $total,
@@ -106,7 +112,7 @@ class CartController extends Controller
 
     public function transactionSuccess(Transaction $transaction)
     {
-        $transaction->load('items.product'); // eager load items & products
+        $transaction->load('items.product');
         return view('cashier.carts.transactionSuccess', compact('transaction'));
     }
 

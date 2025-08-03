@@ -25,9 +25,6 @@
     <ul class="navbar-nav ml-auto">
         <!-- Navbar Search -->
         <li class="nav-item">
-        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-            <i class="fas fa-search"></i>
-        </a>
         <div class="navbar-search-block">
             <form class="form-inline">
             <div class="input-group input-group-sm">
@@ -64,7 +61,7 @@
             <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-            <a href="#" class="d-block">Cashier</a>
+            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
         </div>
         </div>
 
@@ -129,7 +126,7 @@
 
     <section class="content">
         <div class="container-fluid">
-        @yield('content')
+            @yield('content')
         </div>
     </section>
     </div>
@@ -141,13 +138,8 @@
     <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
     </footer>
 
-    <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
     </aside>
-    <!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
-
 </body>
 </html>

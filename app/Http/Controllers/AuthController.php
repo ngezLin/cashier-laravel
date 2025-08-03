@@ -58,7 +58,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
-            'role' => 'required|in:admin,cashier',
+            'role' => 'required',
         ]);
 
         $user = User::create([
@@ -69,6 +69,6 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
-        return redirect('/dashboard');
+        return redirect('/cashier/dashboard');
     }
 }

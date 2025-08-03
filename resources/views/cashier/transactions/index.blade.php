@@ -32,7 +32,7 @@
         </tr>
       </thead>
       <tbody>
-        @forelse($transaction as $trx)
+        @forelse($transactions as $trx)
         <tr>
             <td>{{ $trx->id }}</td>
             <td>{{ $trx->created_at->format('d M Y H:i') }}</td>
@@ -54,7 +54,7 @@
     </table>
   </div>
   <div class="card-footer clearfix">
-    {{ $transaction->links() }}
+    {{ $transactions->links() }}
   </div>
 </div>
 @endsection
