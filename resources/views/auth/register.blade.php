@@ -3,19 +3,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Registration | Cashier App</title>
+    <title>Registration | Po Depo</title>
 
     @include('templates.script')
 
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
-    <div class="card card-outline card-primary">
+    <div class="card card-outline card-dark">
         <div class="card-header text-center">
-        <a href="#" class="h1"><b>Cashier</b>App</a>
+        <a href="#" class="h1"><b>Po</b>Depo</a>
     </div>
     <div class="card-body">
-        <p class="login-box-msg">Register a new membership</p>
+        <p class="login-box-msg">Register</p>
 
         <!-- Display validation errors if any -->
         @if ($errors->any())
@@ -65,13 +65,13 @@
         <div class="input-group mb-3">
             <select name="role" class="form-control" required>
             <option value="" disabled selected>Select Role</option>
-            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+            {{-- <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option> --}}
             <option value="cashier" {{ old('role') == 'cashier' ? 'selected' : '' }}>Cashier</option>
             </select>
         </div>
         <div class="row">
             <div class="col-8">
-            <div class="icheck-primary">
+            <div class="icheck-dark">
                 <input type="checkbox" name="terms" id="agreeTerms" value="agree" required>
                 <label for="agreeTerms">
                 I agree to the <a href="#">terms</a>
@@ -79,7 +79,7 @@
             </div>
             </div>
             <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Register</button>
+            <button type="submit" class="btn btn-dark btn-block">Register</button>
             </div>
         </div>
         </form>

@@ -34,5 +34,6 @@ Route::middleware(['auth', 'role:cashier'])->prefix('cashier')->name('cashier.')
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::get('/transaction-success/{transaction}', [CartController::class, 'transactionSuccess'])->name('transactions.success');
     Route::resource('transactions', TransactionController::class)->only(['index', 'show']);
+    Route::post('/transactions/{transaction}/refund', [TransactionController::class, 'refund'])->name('transactions.refund');
 
 });

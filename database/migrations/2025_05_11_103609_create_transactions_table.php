@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('total', 10, 2);
             $table->integer('customer_amount')->nullable();
             $table->integer('change')->nullable();
+            $table->boolean('is_refunded')->default(false);
             $table->timestamps();
         });
     }

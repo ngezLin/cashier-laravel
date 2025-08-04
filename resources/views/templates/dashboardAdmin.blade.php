@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Fixed Sidebar</title>
+    <title>Po Depo | Admin</title>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -53,7 +53,7 @@
     <!-- Brand Logo -->
     <a href="/admin/dashboard" class="brand-link">
         <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">Klampis Depo</span>
     </a>
 
     <!-- Sidebar -->
@@ -64,7 +64,7 @@
             <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-            <a href="#" class="d-block">Admin</a>
+            <a href="/admin/dashboard" class="d-block">{{ Auth::user()->name }}</a>
         </div>
         </div>
 

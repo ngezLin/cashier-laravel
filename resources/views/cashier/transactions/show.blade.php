@@ -24,19 +24,18 @@
   <div class="card-body">
     <p><strong>Date:</strong> {{ $transaction->created_at->format('d M Y H:i') }}</p>
     <p><strong>Cashier:</strong> {{ $transaction->user->name }}</p>
-    <p><strong>Total:</strong> Rp{{ number_format($transaction->total, 0, ',', '.') }}</p>
 
     <hr>
 
     <h5>Items</h5>
     <table class="table table-bordered">
-      <thead>
+      <thead class="table-light">
         <tr>
-          <th>#</th>
+          <th>No</th>
           <th>Product</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Subtotal</th>
+          <th class="text-center">Quantity</th>
+          <th class="text-end">Price</th>
+          <th class="text-end">Subtotal</th>
         </tr>
       </thead>
       <tbody>
@@ -44,13 +43,20 @@
         <tr>
           <td>{{ $index + 1 }}</td>
           <td>{{ $item->product->product_name }}</td>
-          <td>{{ $item->quantity }}</td>
-          <td>Rp{{ number_format($item->price, 0, ',', '.') }}</td>
-          <td>Rp{{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
+          <td class="text-center">{{ $item->quantity }}</td>
+          <td class="text-end">Rp{{ number_format($item->price, 0, ',', '.') }}</td>
+          <td class="text-end">Rp{{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
         </tr>
         @endforeach
       </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="4" class="text-end">Total</th>
+          <th class="text-end">Rp{{ number_format($transaction->total, 0, ',', '.') }}</th>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </div>
+
 @endsection
