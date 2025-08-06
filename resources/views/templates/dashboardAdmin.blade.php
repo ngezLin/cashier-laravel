@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ asset('dist/images/store.png') }}" type="image/gif">
     <title>Po Depo | Admin</title>
 
 </head>
@@ -83,8 +84,14 @@
     <!-- Sidebar Menu -->
         <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-                with font-awesome or any other icon font library -->
+            <li class="nav-item">
+            <a href="{{ route('admin.dashboard') }}" class="nav-link">
+                <i class="fa-solid fa-home"></i>
+                <p>
+                Dashboard
+                </p>
+            </a>
+            </li>
             <li class="nav-item">
             <a href="{{ route('admin.products.index') }}" class="nav-link">
                 <i class="fa-solid fa-eye"></i>

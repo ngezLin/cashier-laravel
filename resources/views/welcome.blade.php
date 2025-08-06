@@ -6,11 +6,12 @@
     <title>Klampis Depo - Building Materials & Construction Supplies</title>
     <meta name="description" content="Klampis Depo - Your trusted partner for quality building materials and construction supplies in Surabaya. We offer cement, steel, lumber, tiles, paint, and hardware.">
 
+
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/responsive.css') }}">
-    <link rel="icon" href="images/fevicon.png" type="image/gif">
+    <link rel="icon" href="{{ asset('dist/images/store.png') }}" type="image/gif">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 </head>
@@ -19,7 +20,7 @@
     <header class="header_section">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#"><img src="{{ asset('dist/images/logo.png') }}" alt="Klampis Depo"></a>
+                <a class="navbar-brand color" href="#">Klampis Depo</a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
@@ -32,10 +33,14 @@
                         <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
                         <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                        <li class="nav-item">
+                            @auth
+                                <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                            @else
+                                <a class="nav-link" href="{{ route('login') }}">Login</a>
+                            @endauth
+                        </li>
                     </ul>
-                    <div class="login_bt">
-                        <a href="{{ route('login') }}"><i class="fa fa-user"></i> Login</a>
-                    </div>
                 </div>
             </nav>
         </div>
@@ -45,11 +50,7 @@
             <div class="container">
                 <div class="banner_taital_main">
                     <h1 class="banner_taital">Klampis <br> Depo</h1>
-                    <p class="banner_text">Your trusted partner for quality building materials and construction supplies. <br> We provide everything you need for your construction and renovation projects.</p>
-                    <div class="btn_main">
-                        <a href="#about" class="about_bt active">About Us</a>
-                        <a href="tel:+6285100549376" class="callnow_bt">Call Now</a>
-                    </div>
+                    <p class="banner_text">Your trusted partner for quality building materials and construction supplies.</p>
                 </div>
             </div>
         </section>
@@ -68,7 +69,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <img src="{{ asset('dist/images/about-img.png') }}" class="about_img" alt="Klampis Depo Store">
+                    <img src="{{ asset('dist/images/about1-img.png') }}" class="about_img" alt="Klampis Depo Store" style="width: 300px; height: 300px; object-fit: cover;">
                 </div>
             </div>
         </div>
@@ -125,7 +126,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-lg-3 col-md-6">
-                                    <div class="coffee_img"><img src="{{ asset('dist/images/paint-img.png') }}" alt="Paint & Finishes"></div>
+                                    <div class="coffee_img"><img src="{{ asset('dist/images/cement-img.png') }}" alt="Paint & Finishes"></div>
                                     <div class="coffee_box">
                                         <h3 class="types_text">PAINT & FINISHES</h3>
                                         <p class="looking_text">Wide selection of paints, primers, and finishing materials.</p>
@@ -133,7 +134,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-6">
-                                    <div class="coffee_img"><img src="{{ asset('dist/images/tools-img.png') }}" alt="Tools & Hardware"></div>
+                                    <div class="coffee_img"><img src="{{ asset('dist/images/steel-img.png') }}" alt="Tools & Hardware"></div>
                                     <div class="coffee_box">
                                         <h3 class="types_text">TOOLS & HARDWARE</h3>
                                         <p class="looking_text">Professional tools, fasteners, and hardware supplies.</p>
@@ -141,7 +142,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-6">
-                                    <div class="coffee_img"><img src="{{ asset('dist/images/electrical-img.png') }}" alt="Electrical Supplies"></div>
+                                    <div class="coffee_img"><img src="{{ asset('dist/images/lumber-img.png') }}" alt="Electrical Supplies"></div>
                                     <div class="coffee_box">
                                         <h3 class="types_text">ELECTRICAL SUPPLIES</h3>
                                         <p class="looking_text">Cables, switches, outlets, and electrical installation materials.</p>
@@ -149,7 +150,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-6">
-                                    <div class="coffee_img"><img src="{{ asset('dist/images/plumbing-img.png') }}" alt="Plumbing Materials"></div>
+                                    <div class="coffee_img"><img src="{{ asset('dist/images/tiles-img.png') }}" alt="Plumbing Materials"></div>
                                     <div class="coffee_box">
                                         <h3 class="types_text">PLUMBING MATERIALS</h3>
                                         <p class="looking_text">Pipes, fittings, fixtures, and plumbing installation supplies.</p>
@@ -180,11 +181,11 @@
                         <div class="client_section_2">
                             <div class="client_taital_main">
                                 <div class="client_left">
-                                    <img src="{{ asset('dist/images/delivery-service.png') }}" alt="Free Delivery Service" class="client_img">
+                                    <img src="{{ asset('dist/images/about1-img.png') }}" alt="Delivery Service" class="client_img">
                                 </div>
                                 <div class="client_right">
-                                    <h3 class="moark_text">Free Delivery</h3>
-                                    <p class="client_text">We provide free delivery service for orders above minimum purchase within Surabaya city area. Our professional delivery team ensures your materials arrive safely and on time at your construction site.</p>
+                                    <h3 class="moark_text">Affordable Delivery</h3>
+                                    <p class="client_text">We provide affordable delivery service for orders above minimum purchase within Surabaya city area. Our professional delivery team ensures your materials arrive safely and on time at your construction site.</p>
                                 </div>
                             </div>
                         </div>
@@ -194,7 +195,7 @@
                         <div class="client_section_2">
                             <div class="client_taital_main">
                                 <div class="client_left">
-                                    <img src="{{ asset('dist/images/consultation-service.png') }}" alt="Expert Consultation" class="client_img">
+                                    <img src="{{ asset('dist/images/about1-img.png') }}" alt="Expert Consultation" class="client_img">
                                 </div>
                                 <div class="client_right">
                                     <h3 class="moark_text">Material Estimation</h3>
@@ -208,7 +209,7 @@
                         <div class="client_section_2">
                             <div class="client_taital_main">
                                 <div class="client_left">
-                                    <img src="{{ asset('dist/images/online-shopping.png') }}" alt="Online Shopping" class="client_img">
+                                    <img src="{{ asset('dist/images/about1-img.png') }}" alt="Online Shopping" class="client_img">
                                 </div>
                                 <div class="client_right">
                                     <h3 class="moark_text">Shop Online</h3>
@@ -218,11 +219,13 @@
                         </div>
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#custom_slider" data-slide="prev">
-                    <i class="fa fa-arrow-left"></i>
+                <a class="carousel-control-prev" href="#custom_slider" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
                 </a>
-                <a class="carousel-control-next" href="#custom_slider" data-slide="next">
-                    <i class="fa fa-arrow-right"></i>
+                <a class="carousel-control-next" href="#custom_slider" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
                 </a>
             </div>
         </div>
@@ -239,9 +242,9 @@
                     <div class="col-md-12">
                         <div class="mail_section_1 text-center">
                             <a href="https://wa.me/6285100549376?text=Halo%2C%20saya%20ingin%20bertanya%20tentang%20barang%20Anda."
-                            target="_blank"
-                            class="btn btn-success"
-                            style="padding: 12px 24px; font-size: 18px; border-radius: 8px; background-color: #25D366; color: white; text-decoration: none;">
+                               target="_blank"
+                               class="btn btn-success"
+                               style="padding: 12px 24px; font-size: 18px; border-radius: 8px; background-color: #25D366; color: white; text-decoration: none;">
                                 <i class="fa fa-whatsapp" style="margin-right: 8px;"></i> Chat via WhatsApp
                             </a>
                         </div>
@@ -250,12 +253,13 @@
                         <div class="map-responsive">
                             <iframe
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.125332253869!2d112.7793589!3d-7.2952918!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fa5b4b0bfce1%3A0xa07b8b8602f4a3db!2sUD.%20Klampis%20Depo!5e0!3m2!1sen!2sid!4v1692960721066!5m2!1sen!2sid"
-                                width="250"
-                                height="500"
+                                width="600"
+                                height="450"
                                 frameborder="0"
                                 style="border:0; width: 100%;"
-                                allowfullscreen
-                                loading="lazy">
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
                             </iframe>
                         </div>
                     </div>
@@ -290,9 +294,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="https://www.google.com/maps?ll=-7.295334,112.779541&z=16&t=m&hl=en&gl=ID&mapclient=embed&cid=11563989875895346139">
                             <i class="fa fa-map-marker"></i>
-                            <span class="padding_left_10">Jl. Klampis Jaya, Surabaya</span>
+                            <span class="padding_left_10">Jl. Klampis Harapan, Surabaya</span>
                         </a>
                     </li>
                 </ul>
@@ -304,20 +308,5 @@
     <script src="{{ asset('dist/js/jquery.min.js') }}"></script>
     <script src="{{ asset('dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('dist/js/custom.js') }}"></script>
-
-    <!-- Smooth scrolling -->
-    <script>
-        $(document).ready(function(){
-            $('a[href^="#"]').on('click', function(event) {
-                var target = $(this.getAttribute('href'));
-                if( target.length ) {
-                    event.preventDefault();
-                    $('html, body').stop().animate({
-                        scrollTop: target.offset().top - 70
-                    }, 1000);
-                }
-            });
-        });
-    </script>
 </body>
 </html>

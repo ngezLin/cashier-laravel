@@ -1,6 +1,5 @@
 /*--------------------------------------------------------------------- File Name: style.css ---------------------------------------------------------------------*/
 
-
 /*--------------------------------------------------------------------- import Files ---------------------------------------------------------------------*/
 
 @import url(animate.min.css);
@@ -29,7 +28,7 @@ html {
 body {
     color: #666666;
     font-size: 14px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     line-height: 1.80857;
     font-weight: normal;
     overflow-x: hidden;
@@ -39,11 +38,11 @@ a {
     color: #1f1f1f;
     text-decoration: none !important;
     outline: none !important;
-    -webkit-transition: all .3s ease-in-out;
-    -moz-transition: all .3s ease-in-out;
-    -ms-transition: all .3s ease-in-out;
-    -o-transition: all .3s ease-in-out;
-    transition: all .3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 h1,
@@ -59,31 +58,31 @@ h6 {
     font-weight: normal;
     line-height: normal;
     color: #111111;
-    margin: 0
+    margin: 0;
 }
 
 h1 {
-    font-size: 24px
+    font-size: 24px;
 }
 
 h2 {
-    font-size: 22px
+    font-size: 22px;
 }
 
 h3 {
-    font-size: 18px
+    font-size: 18px;
 }
 
 h4 {
-    font-size: 16px
+    font-size: 16px;
 }
 
 h5 {
-    font-size: 14px
+    font-size: 14px;
 }
 
 h6 {
-    font-size: 13px
+    font-size: 13px;
 }
 
 *,
@@ -101,8 +100,8 @@ h4 a,
 h5 a,
 h6 a {
     color: #212121;
-    text-decoration: none!important;
-    opacity: 1
+    text-decoration: none !important;
+    opacity: 1;
 }
 
 button:focus {
@@ -134,11 +133,11 @@ a,
 .btn {
     text-decoration: none !important;
     outline: none !important;
-    -webkit-transition: all .3s ease-in-out;
-    -moz-transition: all .3s ease-in-out;
-    -ms-transition: all .3s ease-in-out;
-    -o-transition: all .3s ease-in-out;
-    transition: all .3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 img {
@@ -146,7 +145,7 @@ img {
     height: auto;
 }
 
- :focus {
+:focus {
     outline: 0;
 }
 
@@ -172,7 +171,7 @@ img {
 
 .form-control:focus {
     border-color: #ffffff !important;
-    box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .25);
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
 }
 
 .navbar-form input {
@@ -209,13 +208,12 @@ button {
     padding: 0px;
 }
 
-
 /* header section start */
 
 .header_section {
     width: 100%;
     float: left;
-    background-image: url(../images/banner-bg.png);
+    background-image: url(../images/banner-bg.jpg);
     height: auto;
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -224,7 +222,7 @@ button {
 .header_bg {
     width: 100%;
     float: left;
-    background: #1d1d1d
+    background: #1d1d1d;
     height: auto;
     background-size: 100%;
 }
@@ -254,10 +252,10 @@ button {
     background-color: #f01c1c;
 }
 
-.navbar-light .navbar-nav .active>.nav-link,
+.navbar-light .navbar-nav .active > .nav-link,
 .navbar-light .navbar-nav .nav-link.active,
 .navbar-light .navbar-nav .nav-link.show,
-.navbar-light .navbar-nav .show>.nav-link {
+.navbar-light .navbar-nav .show > .nav-link {
     color: #fefefd;
     background-color: #f01c1c;
 }
@@ -297,13 +295,11 @@ button {
     color: #f01c1c;
 }
 
-.navbar-brand{
+.navbar-brand {
     margin-top: 20px;
 }
 
-
 /* header section end */
-
 
 /* banner section start */
 
@@ -361,7 +357,6 @@ button {
     color: #fefefd;
     background-color: #f01c1c;
 }
-
 
 .about_bt.active a {
     color: #fefefd;
@@ -430,7 +425,6 @@ button {
     float: left;
     text-align: center;
 }
-
 
 /* banner section end */
 
@@ -505,7 +499,6 @@ button {
     color: #4a4949;
     border: 1px solid #4a4949;
 }
-
 
 /* about section end */
 
@@ -600,7 +593,6 @@ button {
 #main_slider a.carousel-control-next {
     right: -50px;
     top: 170px;
-
 }
 
 #main_slider .carousel-control-next,
@@ -621,9 +613,7 @@ button {
     background-color: #f01c1c;
 }
 
-
 /* coffee section end */
-
 
 /* client section start */
 
@@ -685,7 +675,6 @@ button {
 #custom_slider a.carousel-control-next {
     right: -50px;
     top: 130px;
-
 }
 
 #custom_slider .carousel-control-next,
@@ -705,7 +694,6 @@ button {
     color: #fefefd;
     background-color: #dc8977;
 }
-
 
 /* client section end */
 
@@ -789,7 +777,6 @@ button {
 
 /* blog section end */
 
-
 /* contact section start */
 
 .contact_section {
@@ -832,7 +819,7 @@ button {
     padding: 11px 20px;
     margin-top: 20px;
     border-radius: 40px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 input.mail_text::placeholder {
@@ -850,7 +837,7 @@ input.mail_text::placeholder {
     height: 110px;
     margin-top: 20px;
     border-radius: 40px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 textarea#comment.massage-bt::placeholder {
@@ -886,9 +873,7 @@ textarea#comment.massage-bt::placeholder {
     margin-top: 90px;
 }
 
-
 /* contact section end */
-
 
 /* footer section start */
 
@@ -1041,9 +1026,7 @@ textarea#comment.update_mail::placeholder {
     background-color: #f01c1c;
 }
 
-
 /* footer section end */
-
 
 /* copyright section start */
 
@@ -1061,7 +1044,7 @@ textarea#comment.update_mail::placeholder {
     color: #fefefd;
     text-align: center;
     margin-left: 0px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 .copyright_text a {
@@ -1071,7 +1054,6 @@ textarea#comment.update_mail::placeholder {
 .copyright_text a:hover {
     color: #252525;
 }
-
 
 /* copyright section end */
 

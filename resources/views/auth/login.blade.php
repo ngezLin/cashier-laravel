@@ -12,7 +12,7 @@
 <div class="login-box">
     <div class="card card-outline card-dark">
     <div class="card-header text-center">
-        <a href="#" class="h1"><b>Po</b>Depo</a>
+        <a href="/" class="h1"><b>Po</b>Depo</a>
     </div>
     <div class="card-body">
         <p class="login-box-msg">Sign in to start your session</p>
