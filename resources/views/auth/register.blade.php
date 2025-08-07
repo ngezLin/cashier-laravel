@@ -31,7 +31,7 @@
         <form action="{{ route('register') }}" method="POST">
         @csrf
         <div class="input-group mb-3">
-            <input type="text" name="name" class="form-control" placeholder="Full name" value="{{ old('name') }}" required autofocus>
+            <input id="name-input" type="text" name="name" class="form-control" placeholder="Full name" value="{{ old('name') }}" required autofocus>
             <div class="input-group-append">
             <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="input-group mb-3">
-            <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required>
+            <input id="email-input" type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required>
             <div class="input-group-append">
             <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="input-group mb-3">
-            <input type="password" name="password" class="form-control" placeholder="Password" required>
+            <input id="password-input" type="password" name="password" class="form-control" placeholder="Password" required>
             <div class="input-group-append">
             <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -55,7 +55,7 @@
             </div>
         </div>
         <div class="input-group mb-3">
-            <input type="password" name="password_confirmation" class="form-control" placeholder="Retype password" required>
+            <input id="password-confirmation-input" type="password" name="password_confirmation" class="form-control" placeholder="Retype password" required>
             <div class="input-group-append">
             <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -63,7 +63,7 @@
             </div>
         </div>
         <div class="input-group mb-3">
-            <select name="role" class="form-control" required>
+            <select id="input-role" name="role" class="form-control" required>
             <option value="" disabled selected>Select Role</option>
             {{-- <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option> --}}
             <option value="cashier" {{ old('role') == 'cashier' ? 'selected' : '' }}>Cashier</option>

@@ -9,14 +9,14 @@ def test_register(driver, base_url):
     driver.get(f"{base_url}/register")
 
     WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.NAME, "name"))
+        EC.presence_of_element_located((By.ID, "name-input"))
     ).send_keys("Test User")
 
-    driver.find_element(By.NAME, "email").send_keys("testuser@example.com")
-    driver.find_element(By.NAME, "password").send_keys("test1234")
-    driver.find_element(By.NAME, "password_confirmation").send_keys("test1234")
+    driver.find_element(By.ID, "email-input").send_keys("testuser@example.com")
+    driver.find_element(By.ID, "password-input").send_keys("test1234")
+    driver.find_element(By.ID, "password-confirmation-input").send_keys("test1234")
 
-    role_select = driver.find_element(By.NAME, "role")
+    role_select = driver.find_element(By.ID, "input-role")
     for option in role_select.find_elements(By.TAG_NAME, "option"):
         if option.get_attribute("value") == "cashier":
             option.click()
