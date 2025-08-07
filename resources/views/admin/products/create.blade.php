@@ -38,7 +38,7 @@
         <!-- /.card-body -->
 
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Create Product</button>
+            <button id="submit-button" type="submit" class="btn btn-primary">Create Product</button>
         </div>
     </form>
 </div>

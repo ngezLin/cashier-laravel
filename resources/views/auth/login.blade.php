@@ -30,7 +30,7 @@
         <form action="{{ route('login') }}" method="POST">
         @csrf
         <div class="input-group mb-3">
-            <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email" required autofocus>
+            <input id="input-email" type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email" required autofocus>
             <div class="input-group-append">
             <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="input-group mb-3">
-            <input type="password" name="password" class="form-control" placeholder="Password" required>
+            <input id="input-password" type="password" name="password" class="form-control" placeholder="Password" required>
             <div class="input-group-append">
             <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -55,7 +55,7 @@
             </div>
             </div>
             <div class="col-4">
-            <button type="submit" class="btn btn-dark btn-block">Sign In</button>
+            <button id="button-login" type="submit" class="btn btn-dark btn-block">Sign In</button>
             </div>
         </div>
         </form>

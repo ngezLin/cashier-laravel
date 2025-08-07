@@ -4,7 +4,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">Add New Product</a>
+            <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3" id="add-button">Add New Product</a>
 
             @if(session('success'))
                 <div class="alert alert-success">
@@ -51,11 +51,11 @@
                                     <td>{{ $product->buy_price }}</td>
                                     <td>{{ $product->stock }}</td>
                                     <td>
-                                        <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                        <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-sm btn-warning" id="edit-button">Edit</a>
                                         <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                            <button type="submit" class="btn btn-sm btn-danger delete-button" onclick="return confirm('Are you sure?')">Delete</button>
                                         </form>
                                     </td>
                                 </tr>

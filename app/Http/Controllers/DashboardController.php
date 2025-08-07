@@ -5,7 +5,6 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
-use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {

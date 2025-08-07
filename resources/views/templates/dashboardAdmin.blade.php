@@ -15,7 +15,7 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" id="pushmenu" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
         <a href="/admin/dashboard" class="nav-link">Home</a>
@@ -81,7 +81,7 @@
         </div>
     </div>
 
-    <!-- Sidebar Menu -->
+        <!-- Sidebar Menu -->
         <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
@@ -94,24 +94,17 @@
             </li>
             <li class="nav-item">
             <a href="{{ route('admin.products.index') }}" class="nav-link">
-                <i class="fa-solid fa-eye"></i>
-                <p>
-                View Products
-                </p>
+                <i class="fa-solid fa-eye"></i> View Products
             </a>
             </li>
             <li class="nav-item">
             <a href="{{ route('admin.products.create') }}" class="nav-link">
-                <i class="fa-solid fa-plus"></i>
-                <p>
-                Add Products
-                </p>
+                <i class="fa-solid fa-plus"></i> Add Products
             </a>
             </li>
             <li class="nav-item mt-auto">
                 <a href="#" class="nav-link text-danger" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="fas fa-power-off text-danger"></i>
-                    <p>Logout</p>
+                    <i class="fas fa-power-off text-danger"></i> Logout
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
