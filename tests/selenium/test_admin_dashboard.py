@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import pytest
 
-def test_login_success(driver, base_url):
+def test_admin_dashboard(driver, base_url):
     driver.get(f"{base_url}/login")
 
     driver.find_element(By.ID, "input-email").send_keys("admin@mail.com")
