@@ -19,7 +19,7 @@
                     <div class="card-tools">
                     <form action="{{ route('admin.products.index') }}" method="GET">
                         <div class="input-group input-group-sm" style="width: 150px;">
-                        <input type="text" name="search" class="form-control float-right" placeholder="Search" value="{{ request('search') }}">
+                        <input type="text" name="search" class="form-control float-right" id="search-text" placeholder="Search" value="{{ request('search') }}">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-default">
                             <i class="fas fa-search"></i>

@@ -36,7 +36,6 @@ class TestProductCRUD:
         self.login_as_admin(driver, base_url)
         self.navigate_to_products(driver)
 
-        # Verify we're on the products page
         assert "/admin/products" in driver.current_url
         assert "product" in driver.page_source.lower()
 
@@ -45,16 +44,13 @@ class TestProductCRUD:
         self.login_as_admin(driver, base_url)
         self.navigate_to_products(driver)
 
-        # Click add button
         add_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.ID, "add-button"))
         )
         add_button.click()
 
-        # Wait for create page
         WebDriverWait(driver, 10).until(EC.url_contains("/admin/products/create"))
 
-        # Fill product details
         product_name = "Test Product Selenium"
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "product_name"))
@@ -64,41 +60,52 @@ class TestProductCRUD:
         driver.find_element(By.ID, "buy_price").send_keys("80")
         driver.find_element(By.ID, "stock").send_keys("50")
 
-        # FIXED: Added parentheses to actually call the click method
         driver.find_element(By.ID, "submit-button").click()
 
-        # Wait for redirect after successful submission
         WebDriverWait(driver, 10).until(
             lambda driver: "/admin/products/create" not in driver.current_url
         )
 
-        # Verify product was added (optional but recommended)
         assert product_name in driver.page_source
 
-    def test_edit_product(self, driver, base_url):
-        """Test editing an existing product"""
+    def test_search_and_edit_product(self, driver, base_url):
+        """Test searching for a product and then editing it"""
         self.login_as_admin(driver, base_url)
         self.navigate_to_products(driver)
 
-        # Find and click first edit button
+        # Cari produk
+        search_input = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "search-text"))
+        )
+        search_input.clear()
+        search_input.send_keys("Test Product Selenium")
+        search_input.send_keys("\n")
+
+        WebDriverWait(driver, 10).until(
+            lambda driver: "search" in driver.current_url.lower()
+        )
+
+        assert "Test Product Selenium" in driver.page_source
+        assert "No products found" not in driver.page_source
+
+        # Klik tombol edit dari hasil pencarian
         edit_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Edit')]"))
         )
 
-        # Store original product name for verification
+        # Simpan nama produk sebelum edit
         original_row = edit_button.find_element(By.XPATH, "./ancestor::tr")
         original_name = original_row.find_element(By.TAG_NAME, "td").text
 
         edit_button.click()
 
-        # Wait for edit page
+        # Tunggu halaman edit
         WebDriverWait(driver, 10).until(
             lambda driver: "edit" in driver.current_url.lower()
         )
 
-        # Edit product details
+        # Edit detail produk
         updated_name = "Test Product Updated Selenium"
-
         product_name_field = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "product_name"))
         )
@@ -117,20 +124,36 @@ class TestProductCRUD:
         stock_field.clear()
         stock_field.send_keys("55")
 
-        # Submit changes
+        # Submit perubahan
         submit_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.ID, "submit-button"))
         )
         submit_button.click()
 
-        # Wait for redirect
+        # Tunggu redirect dari edit page
         WebDriverWait(driver, 10).until(
             lambda driver: "edit" not in driver.current_url.lower()
         )
 
-        # Verify changes were saved
+        # Navigasi ulang ke halaman produk untuk ambil data terbaru
+        self.navigate_to_products(driver)
+
+        # Verifikasi bahwa produk sudah diupdate
         assert updated_name in driver.page_source
-        assert original_name not in driver.page_source
+
+        # Cari nama lama untuk memastikan tidak ada di hasil
+        search_input = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "search-text"))
+        )
+        search_input.clear()
+        search_input.send_keys(original_name)
+        search_input.send_keys("\n")
+
+        WebDriverWait(driver, 10).until(
+            lambda driver: "search" in driver.current_url.lower()
+        )
+
+        assert "No products found" in driver.page_source
 
     def test_delete_product(self, driver, base_url):
         """Test deleting a product"""
