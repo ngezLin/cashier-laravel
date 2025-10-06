@@ -79,13 +79,11 @@
             color: var(--accent-green);
         }
 
-        /* --- NEW SUBTITLE STYLE --- */
         .subtitle-accent {
-            color: var(--accent-green) !important;
-            font-weight: 300; /* Slightly thinner for a sleek look */
+            color: var(--text-white) !important;
+            font-weight: 300;
             opacity: 0.9;
         }
-        /* -------------------------- */
 
         /* --- Animation: Pulsing Grid Background --- */
         .grid-bg::before {
@@ -251,84 +249,63 @@
     <!-- Product Search and Showcase Section -->
     <section id="products" class="py-5 py-md-5">
         <div class="container">
-            <h2 class="text-center mb-4 text-white fw-bold scroll-reveal">MATERIAL INDEX <span class="highlight-text">// PRODUCTS</span></h2>
+            <h2 class="text-center mb-4 text-white fw-bold scroll-reveal">MATERIAL INDEX <span class="highlight-text">- PRODUCTS</span></h2>
             <!-- SUBTITLE COLOR CHANGED TO ACCENT GREEN -->
             <p class="text-center mb-5 subtitle-accent scroll-reveal" style="transition-delay: 0.1s;">Browse our curated catalog of essential construction components.</p>
 
             <!-- Search Bar -->
             <div class="row justify-content-center mb-5 scroll-reveal" style="transition-delay: 0.2s;">
                 <div class="col-lg-8">
-                    <div class="input-group input-group-lg">
-                        <input type="text" class="form-control futuristic-search" placeholder="Search for Cement, Steel, Sand, or Tiles..." aria-label="Product Search">
-                        <button class="btn futuristic-button" type="button" style="border-width: 1px; color: var(--text-light); border-color: var(--border-color);" onmouseover="this.style.borderColor=getComputedStyle(document.documentElement).getPropertyValue('--accent-green');" onmouseout="this.style.borderColor=getComputedStyle(document.documentElement).getPropertyValue('--border-color');">
-                            <i class="bi bi-search"></i> Scan
-                        </button>
-                    </div>
+                    <form method="GET" action="{{ route('welcome') }}">
+                        <div class="input-group input-group-lg">
+                            <input
+                                type="text"
+                                name="search"
+                                class="form-control futuristic-search"
+                                placeholder="Search for Cement, Steel, Sand, or Tiles..."
+                                aria-label="Product Search"
+                                value="{{ request('search') }}"
+                            >
+                            <button class="btn futuristic-button" type="submit" style="border-width: 1px; color: var(--text-light); border-color: var(--border-color);"
+                                onmouseover="this.style.borderColor=getComputedStyle(document.documentElement).getPropertyValue('--accent-green');"
+                                onmouseout="this.style.borderColor=getComputedStyle(document.documentElement).getPropertyValue('--border-color');">
+                                <i class="bi bi-search"></i> Scan
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
-            <!-- Product Grid -->
+
+            <!-- Product Grid - Dynamic Content Starts Here -->
             <div class="row g-4">
-                <!-- Dummy Product 1: High-Density Cement -->
-                <div class="col-sm-6 col-md-4 col-lg-3 scroll-reveal" style="transition-delay: 0.3s;">
+                @forelse ($products as $product)
+                <div class="col-sm-6 col-md-4 col-lg-3 scroll-reveal" style="transition-delay: {{ 0.3 + (($loop->index % 4) * 0.1) }}s;">
                     <div class="futuristic-card p-3 h-100">
-                        <img src="https://placehold.co/600x400/3c3c3c/a0a0a0?text=HD+Cement" class="product-image mb-3" alt="High Density Cement Placeholder">
-                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill mb-2">FOUNDATION</span>
-                        <h5 class="text-white">Hydro-Sealed Cement (HS-10)</h5>
-                        <p class="text-muted small mb-3">Extreme weather resistance for critical structures.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="lead highlight-text mb-0 fw-bold">IDR 58k</p>
-                            <a href="https://www.tokopedia.com/klampisdepo" target="_blank" class="btn btn-sm futuristic-button">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
+                        <!-- Placeholder Image (using product name as text) -->
+                        <img src="https://placehold.co/600x400/3c3c3c/a0a0a0?text={{ urlencode($product->product_name) }}" class="product-image mb-3" alt="{{ $product->product_name }}">
 
-                <!-- Dummy Product 2: Structural Steel Rebar -->
-                <div class="col-sm-6 col-md-4 col-lg-3 scroll-reveal" style="transition-delay: 0.4s;">
-                    <div class="futuristic-card p-3 h-100">
-                        <img src="https://placehold.co/600x400/3c3c3c/a0a0a0?text=Rebar+Steel" class="product-image mb-3" alt="Structural Steel Placeholder">
-                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill mb-2">FRAMEWORK</span>
-                        <h5 class="text-white">Grade A-Tension Rebar (12mm)</h5>
-                        <p class="text-muted small mb-3">High tensile strength, optimized for seismic resilience.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="lead highlight-text mb-0 fw-bold">IDR 92k / pc</p>
-                            <a href="https://www.tokopedia.com/klampisdepo" target="_blank" class="btn btn-sm futuristic-button">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
+                        <h5 class="text-white">{{ $product->product_name }}</h5>
+                        <p class="text-muted small mb-3">Stock: {{ $product->stock }} units available.</p>
 
-                <!-- Dummy Product 3: Ceramic Floor Tile -->
-                <div class="col-sm-6 col-md-4 col-lg-3 scroll-reveal" style="transition-delay: 0.5s;">
-                    <div class="futuristic-card p-3 h-100">
-                        <img src="https://placehold.co/600x400/3c3c3c/a0a0a0?text=Ceramic+Tile" class="product-image mb-3" alt="Ceramic Tile Placeholder">
-                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill mb-2">FINISHING</span>
-                        <h5 class="text-white">Neo-Polished Ceramic (60x60)</h5>
-                        <p class="text-muted small mb-3">Sleek, scratch-resistant surface for modern interiors.</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="lead highlight-text mb-0 fw-bold">IDR 125k / box</p>
+                            <!-- Format price as IDR -->
+                            <p class="lead highlight-text mb-0 fw-bold">{{ 'IDR ' . number_format($product->sell_price, 0, ',', '.') }}</p>
                             <a href="https://www.tokopedia.com/klampisdepo" target="_blank" class="btn btn-sm futuristic-button">Buy Now</a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Dummy Product 4: Concrete Sand Aggregate -->
-                <div class="col-sm-6 col-md-4 col-lg-3 scroll-reveal" style="transition-delay: 0.6s;">
-                    <div class="futuristic-card p-3 h-100">
-                        <img src="https://placehold.co/600x400/3c3c3c/a0a0a0?text=Concrete+Sand" class="product-image mb-3" alt="Concrete Sand Placeholder">
-                        <span class="badge bg-info-subtle text-info border border-info-subtle rounded-pill mb-2">AGGREGATE</span>
-                        <h5 class="text-white">Washed & Filtered River Sand</h5>
-                        <p class="text-muted small mb-3">Clean, optimal grain size for high-quality concrete mix.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="lead highlight-text mb-0 fw-bold">IDR 350k / m³</p>
-                            <a href="https://www.tokopedia.com/klampisdepo" target="_blank" class="btn btn-sm futuristic-button">Buy Now</a>
-                        </div>
-                    </div>
+                @empty
+                <div class="col-12 text-center py-5">
+                    <p class="lead text-muted">No products currently available in the system or stock is zero.</p>
                 </div>
+                @endforelse
             </div>
+            <!-- Dynamic Content Ends Here -->
 
             <div class="text-center mt-5 scroll-reveal" style="transition-delay: 0.7s;">
                  <a href="https://www.tokopedia.com/klampisdepo" target="_blank" class="btn btn-lg futuristic-button w-50">
-                    <i class="bi bi-shop me-2"></i> View All 500+ Items on Tokopedia
+                    <i class="bi bi-shop me-2"></i> View All 1000+ Items on Tokopedia
                 </a>
             </div>
         </div>
@@ -337,7 +314,7 @@
     <!-- Service & Value Proposition Section -->
     <section id="services" class="py-5 bg-black" style="border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
         <div class="container">
-            <h2 class="text-center mb-5 text-white fw-bold scroll-reveal">ADVANCED LOGISTICS <span class="highlight-text">// EFFICIENCY</span></h2>
+            <h2 class="text-center mb-5 text-white fw-bold scroll-reveal">ADVANCED LOGISTICS <span class="highlight-text">- EFFICIENCY</span></h2>
 
             <div class="row g-4 text-center">
                 <!-- Feature 1 -->
@@ -345,7 +322,7 @@
                     <div class="futuristic-card p-4 h-100">
                         <i class="bi bi-truck-flatbed text-white mb-3" style="font-size: 3rem; color: var(--accent-green) !important;"></i>
                         <h4 class="text-white">Rapid Deployment</h4>
-                        <p class="text-muted">Guaranteed delivery within the Surabaya radius. Materials on-site when you need them, not days later.</p>
+                        <p class="text-grey">Guaranteed delivery within the Surabaya radius. Materials on-site when you need them, not days later.</p>
                     </div>
                 </div>
                 <!-- Feature 2 -->
@@ -353,7 +330,7 @@
                     <div class="futuristic-card p-4 h-100">
                         <i class="bi bi-shield-check text-white mb-3" style="font-size: 3rem; color: var(--accent-green) !important;"></i>
                         <h4 class="text-white">Certified Quality</h4>
-                        <p class="text-muted">Every product is sourced from certified suppliers and undergoes rigorous quality assurance protocols.</p>
+                        <p class="text-grey">Every product is sourced from certified suppliers and undergoes rigorous quality assurance protocols.</p>
                     </div>
                 </div>
                 <!-- Feature 3 -->
@@ -361,7 +338,7 @@
                     <div class="futuristic-card p-4 h-100">
                         <i class="bi bi-cpu text-white mb-3" style="font-size: 3rem; color: var(--accent-green) !important;"></i>
                         <h4 class="text-white">Project Consultation</h4>
-                        <p class="text-muted">Leverage our decades of experience. Get expert advice on material quantities and specifications.</p>
+                        <p class="text-grey">Leverage our decades of experience. Get expert advice on material quantities and specifications.</p>
                     </div>
                 </div>
             </div>
@@ -374,7 +351,7 @@
             <div class="row g-5">
                 <!-- Location and Map -->
                 <div class="col-lg-7">
-                    <h3 class="text-white fw-bold mb-4 scroll-reveal">OPERATION CENTER <span class="highlight-text">// LOCATION</span></h3>
+                    <h3 class="text-white fw-bold mb-4 scroll-reveal">OPERATION CENTER <span class="highlight-text">- LOCATION</span></h3>
                     <div class="futuristic-card p-3 scroll-reveal" style="aspect-ratio: 16 / 9; transition-delay: 0.1s;">
                          <!-- Google Map Embed (using a placeholder iframe for demonstration) -->
                          <iframe
@@ -394,14 +371,14 @@
 
                 <!-- Contact Info -->
                 <div class="col-lg-5">
-                    <h3 class="text-white fw-bold mb-4 scroll-reveal">DIRECT ACCESS <span class="highlight-text">// CONNECT</span></h3>
+                    <h3 class="text-white fw-bold mb-4 scroll-reveal">DIRECT ACCESS <span class="highlight-text">- CONNECT</span></h3>
 
                     <!-- Tokopedia Card -->
                     <div class="futuristic-card p-4 mb-3 d-flex align-items-center scroll-reveal" style="transition-delay: 0.3s;">
                         <i class="bi bi-cart4 display-6 me-4" style="color: var(--accent-green);"></i>
                         <div>
                             <h5 class="text-white mb-1">Official E-Store</h5>
-                            <a href="https://www.tokopedia.com/klampisdepo" target="_blank" class="text-decoration-none text-muted small footer-link">
+                            <a href="https://www.tokopedia.com/klampisdepo" target="_blank" class="text-decoration-none text-grey small footer-link">
                                 Tokopedia /klampisdepo <i class="bi bi-box-arrow-up-right"></i>
                             </a>
                         </div>
@@ -413,7 +390,7 @@
                         <div>
                             <h5 class="text-white mb-1">Quick Contact (WhatsApp)</h5>
                             <!-- Formatted for click-to-chat -->
-                            <a href="https://wa.me/6285100549376" target="_blank" class="text-decoration-none text-muted small footer-link">
+                            <a href="https://wa.me/6285100549376" target="_blank" class="text-decoration-none text-grey small footer-link">
                                 +62 85100549376 <i class="bi bi-box-arrow-up-right"></i>
                             </a>
                         </div>
@@ -423,9 +400,9 @@
                     <div class="futuristic-card p-4 d-flex align-items-center scroll-reveal" style="transition-delay: 0.5s;">
                         <i class="bi bi-calendar-check display-6 me-4" style="color: var(--accent-green);"></i>
                         <div>
-                            <h5 class="text-white mb-1">Operational Hours</h5>
-                            <p class="text-muted small mb-0">Monday - Saturday: 07:00 - 17:00 WIB</p>
-                            <p class="text-muted small mb-0">Sunday: Closed</p>
+                            <h5 class="text-grey mb-1">Operational Hours</h5>
+                            <p class="text-grey small mb-0">Monday - Saturday: 07:00 - 17:00 WIB</p>
+                            <p class="text-grrey small mb-0">Sunday: Closed</p>
                         </div>
                     </div>
 
@@ -449,24 +426,19 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // =========================================================
-            // 1. Dynamic Store Status Logic
-            // =========================================================
             function updateStoreStatus() {
                 const now = new Date();
-                const day = now.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+                const day = now.getDay();
                 const hour = now.getHours();
 
-                // Store Hours: 7am (7) to 5pm (17), Monday (1) to Saturday (6)
                 const isWeekday = (day >= 1 && day <= 6);
-                const isTimeOpen = (hour >= 7 && hour < 17); // Close is 5pm, so < 17
+                const isTimeOpen = (hour >= 7 && hour < 17);
 
                 const isOpen = isWeekday && isTimeOpen;
 
                 const indicator = document.getElementById('store-status-indicator');
                 const text = document.getElementById('store-status-text');
 
-                // Reset classes
                 indicator.classList.remove('status-open', 'status-closed');
 
                 if (isOpen) {
@@ -480,18 +452,13 @@
                 }
             }
 
-            // Run immediately and set an interval to update every minute
             updateStoreStatus();
             setInterval(updateStoreStatus, 60000);
 
-            // =========================================================
-            // 2. Scroll Reveal Animation Logic
-            // =========================================================
             const scrollElements = document.querySelectorAll('.scroll-reveal');
 
             const elementInView = (el, dividend = 1) => {
                 const elementTop = el.getBoundingClientRect().top;
-                // Check if the element top is less than (viewport height / dividend)
                 return (
                     elementTop <=
                     (window.innerHeight || document.documentElement.clientHeight) / dividend
@@ -510,16 +477,9 @@
                 })
             }
 
-            // Listen for scroll and run the handler
             window.addEventListener('scroll', handleScrollAnimation);
 
-            // Initial check on load
             handleScrollAnimation();
-
-            // =========================================================
-            // 3. Simple Button Hover Animation (CSS transition fallback)
-            // This is primarily handled by CSS, but good practice to show event listeners.
-            // =========================================================
             const buttons = document.querySelectorAll('.futuristic-button');
             buttons.forEach(btn => {
                 btn.addEventListener('mouseover', () => {

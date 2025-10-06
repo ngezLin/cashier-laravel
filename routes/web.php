@@ -7,10 +7,10 @@ use App\Http\Controllers\Cashier\CartController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Cashier\TransactionController;
 use App\Http\Controllers\Cashier\CashierProductController;
+use App\Http\Controllers\public\LandingController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LandingController::class, 'index'])->name('welcome');
+
 
 // Authentication
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
