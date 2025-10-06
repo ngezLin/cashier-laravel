@@ -13,6 +13,9 @@ class Transaction extends Model
     'customer_amount',
     'change',
     'status',
+    'is_refunded',
+    'payment_method',
+    'note',
     ];
     public function items()
     {

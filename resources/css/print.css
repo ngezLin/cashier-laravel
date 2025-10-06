@@ -1,0 +1,59 @@
+/* print.css - khusus untuk printer thermal 58mm */
+
+@media print {
+    body,
+    html {
+        width: 58mm; /* Lebar kertas thermal 58mm */
+        margin: 0;
+        padding: 0;
+        font-family: monospace; /* Font monospace supaya kolom angka rapi */
+        font-size: 12px; /* Sesuaikan agar muat */
+    }
+
+    .invoice {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+    }
+
+    table th,
+    table td {
+        padding: 2px 0;
+        text-align: left;
+        border-bottom: 1px dashed #000;
+    }
+
+    table th {
+        font-weight: bold;
+    }
+
+    p,
+    strong,
+    span {
+        margin: 0;
+        padding: 0;
+        line-height: 1.2;
+    }
+
+    .lead {
+        font-weight: bold;
+        margin-bottom: 3px;
+    }
+
+    /* Hilangkan semua tombol/link saat print */
+    .no-print {
+        display: none !important;
+    }
+
+    /* Atur halaman tanpa margin */
+    @page {
+        size: auto;
+        margin: 0;
+    }
+}

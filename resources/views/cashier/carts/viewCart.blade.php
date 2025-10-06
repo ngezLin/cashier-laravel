@@ -66,7 +66,7 @@
             </tbody>
         </table>
 
-        <!-- Payment Form -->
+        <!-- Checkout Form -->
         <form action="{{ route('cashier.cart.checkout') }}" method="POST">
             @csrf
             <div class="form-group mb-3">
@@ -75,6 +75,8 @@
                     <option value="cash">Cash</option>
                     <option value="credit_card">Credit Card</option>
                     <option value="debit_card">Debit Card</option>
+                    <option value="e_wallet">Qris</option>
+                    <option value="other">Other</option>
                 </select>
             </div>
 
@@ -83,14 +85,20 @@
                 <input type="number" name="customer_amount" id="customer_amount" class="form-control" required min="{{ $total }}">
             </div>
 
-            <button type="submit" class="btn btn-success">
-                Checkout
-            </button>
-            <button type="submit" formaction="{{ route('cashier.cart.saveDraft') }}" class="btn btn-warning">
-                Save as Draft
-            </button>
+            <div class="form-group mb-3">
+                <label for="note">Note (optional)</label>
+                <textarea name="note" id="note" class="form-control" rows="2"></textarea>
+            </div>
 
+            <button type="submit" class="btn btn-success">Checkout</button>
         </form>
+
+        <!-- Save Draft Form -->
+        <form action="{{ route('cashier.cart.saveDraft') }}" method="POST" class="mt-2">
+            @csrf
+            <button type="submit" class="btn btn-warning">Save as Draft</button>
+        </form>
+
     @endif
 </div>
 @endsection

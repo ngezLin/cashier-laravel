@@ -12,11 +12,12 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::with('user')->latest()->paginate(10);
+        $transactions = Transaction::with(['user', 'items.product'])
+            ->latest()
+            ->paginate(10);
 
         return view('cashier.transactions.index', compact('transactions'));
     }
-
 
     public function show(Transaction $transaction)
     {

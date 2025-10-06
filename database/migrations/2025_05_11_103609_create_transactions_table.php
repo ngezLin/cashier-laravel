@@ -17,6 +17,8 @@ return new class extends Migration
             $table->decimal('total', 10, 2);
             $table->integer('customer_amount')->nullable();
             $table->integer('change')->nullable();
+            $table->string('payment_method')->nullable(); //tambahan kolom payment_method
+            $table->string('note')->nullable(); //tambahan kolom note
             $table->boolean('is_refunded')->default(false);
             $table->enum('status', ['draft', 'pending', 'completed']);
             $table->timestamps();

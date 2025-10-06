@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Cashier\CartController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Cashier\TransactionController;
+use App\Http\Controllers\Cashier\CashierProductController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,7 +28,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 // Cashier-only routes
 Route::middleware(['auth', 'role:cashier'])->prefix('cashier')->name('cashier.')->group(function () {
     Route::get('/dashboard', fn() => view('cashier.dashboard'))->name('dashboard');
-    Route::get('/products', [CartController::class, 'showProducts'])->name('products.index');
+    Route::get('/products-list', [CartController::class, 'showProducts'])->name('products.list');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
@@ -44,7 +45,8 @@ Route::middleware(['auth', 'role:cashier'])->prefix('cashier')->name('cashier.')
     Route::post('/transactions/{transaction}/refund', [TransactionController::class, 'refund'])->name('transactions.refund');
     Route::get('/cart/draft', [CartController::class, 'viewDraft'])->name('cart.draft');
 
-    //edit item
-    Route::resource('products', ProductController::class);
+    //crud product for cashier
+    Route::resource('products', CashierProductController::class);
+
 });
 

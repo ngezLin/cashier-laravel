@@ -1,5 +1,5 @@
-@include('templates.script')
 @extends('templates.dashboardCashier')
+@include('templates.script')
 
 @section('header')
 <div class="row mb-2">
@@ -24,6 +24,10 @@
   <div class="card-body">
     <p><strong>Date:</strong> {{ $transaction->created_at->format('d M Y H:i') }}</p>
     <p><strong>Cashier:</strong> {{ $transaction->user->name }}</p>
+    <p><strong>Payment Method:</strong> {{ $transaction->payment_method ?? '-' }}</p>
+    @if($transaction->note)
+        <p><strong>Note:</strong> {{ $transaction->note }}</p>
+    @endif
 
     <hr>
 
@@ -58,5 +62,4 @@
     </table>
   </div>
 </div>
-
 @endsection

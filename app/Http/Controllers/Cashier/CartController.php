@@ -23,7 +23,7 @@ class CartController extends Controller
 
         $products = $query->paginate(9)->withQueryString();
 
-        return view('cashier.products.index', compact('products'));
+        return view('cashier.products.list', compact('products'));
     }
 
 
@@ -91,6 +91,8 @@ class CartController extends Controller
                 'total' => $total,
                 'customer_amount' => $customerAmount,
                 'change' => $change,
+                'payment_method' => $request->input('payment_method'), // ✅ baru
+                'note' => $request->input('note'), // ✅ baru
                 'status' => 'completed',
             ]);
 
@@ -121,6 +123,7 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'Checkout failed: ' . $e->getMessage());
         }
     }
+
 
 
 
@@ -176,6 +179,8 @@ class CartController extends Controller
                 'status' => 'draft',
                 'customer_amount' => 0,
                 'change' => 0,
+                'payment_method' => $request->input('payment_method'), // optional
+                'note' => $request->input('note'), // optional
             ]);
 
             foreach ($cartItems as $item) {
@@ -196,6 +201,7 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'Failed to save draft.');
         }
     }
+
 
     public function showDrafts()
     {
