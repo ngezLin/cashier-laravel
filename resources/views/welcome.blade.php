@@ -1,308 +1,536 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Klampis Depo - Building Materials & Construction Supplies</title>
-    <meta name="description" content="Klampis Depo - Your trusted partner for quality building materials and construction supplies in Surabaya. We offer cement, steel, lumber, tiles, paint, and hardware.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klampis Depo - Futuristic Building Materials</title>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
+    <style>
+        :root {
+            --primary-gray: #1a1a1a;
+            --secondary-gray: #2c2c2c;
+            --accent-green: #00ff80; /* Open status - bright green */
+            --accent-red: #ff4757; /* Closed status */
+            --text-light: #e0e0e0;
+            --text-white: #ffffff;
+            --border-color: #444444;
+            --card-hover-bg: #383838;
+        }
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ asset('dist/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/css/responsive.css') }}">
-    <link rel="icon" href="{{ asset('dist/images/store.png') }}" type="image/gif">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-gray);
+            color: var(--text-light);
+            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+        }
+
+        /* --- Custom Futuristic Styling --- */
+        .futuristic-card {
+            background-color: var(--secondary-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .futuristic-card:hover {
+            box-shadow: 0 8px 15px rgba(0, 255, 128, 0.1);
+            transform: translateY(-3px);
+            background-color: var(--card-hover-bg);
+        }
+
+        .futuristic-button {
+            border: 2px solid var(--accent-green);
+            background-color: transparent;
+            color: var(--accent-green);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 8px;
+        }
+
+        .futuristic-button:hover {
+            background-color: var(--accent-green);
+            color: var(--primary-gray);
+            transform: scale(1.05);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-gray) 0%, #0d0d0d 100%);
+            padding: 8rem 0;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-shadow: 0 0 15px rgba(0, 255, 128, 0.4);
+        }
+
+        .highlight-text {
+            color: var(--accent-green);
+        }
+
+        /* --- NEW SUBTITLE STYLE --- */
+        .subtitle-accent {
+            color: var(--accent-green) !important;
+            font-weight: 300; /* Slightly thinner for a sleek look */
+            opacity: 0.9;
+        }
+        /* -------------------------- */
+
+        /* --- Animation: Pulsing Grid Background --- */
+        .grid-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            opacity: 0.1;
+            animation: pulseGrid 20s infinite linear;
+        }
+
+        @keyframes pulseGrid {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+
+        /* --- Animation: Status Indicator --- */
+        .status-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .status-open {
+            background-color: var(--accent-green);
+            box-shadow: 0 0 15px var(--accent-green);
+            animation: pulse-open 1.5s infinite alternate;
+        }
+
+        .status-closed {
+            background-color: var(--accent-red);
+            box-shadow: 0 0 15px var(--accent-red);
+            animation: pulse-closed 1.5s infinite alternate;
+        }
+
+        @keyframes pulse-open {
+            from { opacity: 0.8; }
+            to { opacity: 1; transform: scale(1.1); }
+        }
+
+        @keyframes pulse-closed {
+            from { opacity: 0.6; }
+            to { opacity: 0.9; transform: scale(1.05); }
+        }
+
+        /* --- Animation: Scroll Reveal Effect (for demonstration) --- */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Product Image Placeholder Style --- */
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            filter: grayscale(80%) brightness(80%);
+            transition: filter 0.5s;
+        }
+
+        .futuristic-card:hover .product-image {
+            filter: grayscale(0%) brightness(100%);
+        }
+
+        /* --- Footer Style --- */
+        .footer-link:hover {
+            color: var(--accent-green) !important;
+            transform: scale(1.05);
+        }
+
+        /* --- Search Bar Style --- */
+        .futuristic-search {
+            background-color: var(--primary-gray);
+            border: 1px solid var(--accent-green);
+            color: var(--text-white);
+            box-shadow: 0 0 10px rgba(0, 255, 128, 0.3);
+            transition: all 0.3s;
+        }
+
+        .futuristic-search:focus {
+            background-color: #0d0d0d;
+            border-color: var(--accent-green);
+            box-shadow: 0 0 15px var(--accent-green);
+        }
+    </style>
 </head>
-<body>
-    <!-- Header -->
-    <header class="header_section">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand color" href="#">Klampis Depo</a>
+<body class="grid-bg">
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black sticky-top shadow-lg" style="border-bottom: 1px solid var(--border-color);">
+        <div class="container py-2">
+            <a class="navbar-brand hero-title highlight-text" href="#" style="font-size: 1.5rem;">KLAMPIS DEPO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Laravel Blade Login Link Placeholder -->
+                        <a class="nav-link text-white futuristic-button btn-sm d-flex align-items-center" href="{{ route('login') }}" style="border-width: 1px; padding: 4px 12px;">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>
+                            Login
+                        </a>
+                        <!-- End Placeholder -->
+                    </li>
+                </ul>
+            </div>
         </div>
+    </nav>
 
-        <!-- Banner -->
-        <section class="banner_section layout_padding" id="home">
-            <div class="container">
-                <div class="banner_taital_main">
-                    <h1 class="banner_taital">Klampis <br> Depo</h1>
-                    <p class="banner_text">Your trusted partner for quality building materials and construction supplies.</p>
+    <!-- Hero Section -->
+    <header class="hero-section text-center position-relative">
+        <div class="container z-10">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <h1 class="hero-title text-white mb-3 scroll-reveal">
+                        BUILDING THE FUTURE. <span class="highlight-text">TODAY.</span>
+                    </h1>
+                    <!-- IMPROVED SUBTITLE TEXT AND COLOR -->
+                    <p class="lead mb-5 subtitle-accent scroll-reveal" style="transition-delay: 0.1s; font-weight: 400;">
+                        Engineering the future of construction. Your source for high-grade, modern materials in Surabaya. Innovation meets foundation at Klampis Depo.
+                    </p>
+
+                    <!-- Status Widget (Dynamic) -->
+                    <div class="d-flex justify-content-center align-items-center mb-5 scroll-reveal" style="transition-delay: 0.2s;">
+                        <span id="store-status-indicator" class="status-indicator"></span>
+                        <span id="store-status-text" class="fw-bold text-uppercase">Checking Status...</span>
+                    </div>
+
+                    <a href="#products" class="btn btn-lg futuristic-button scroll-reveal" style="transition-delay: 0.3s;">
+                        Explore Materials <i class="bi bi-arrow-down-right"></i>
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
     </header>
 
-    <!-- About Section -->
-    <section class="about_section layout_padding" id="about">
+    <!-- Product Search and Showcase Section -->
+    <section id="products" class="py-5 py-md-5">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="about_taital_box">
-                        <h1 class="about_taital">About Our Store</h1>
-                        <h2 class="about_taital_1">Building Materials Specialist</h2>
-                        <p class="about_text">With over 15 years of experience in the building materials industry, Klampis Depo has been serving contractors, builders, and homeowners in Surabaya with quality products and exceptional service. We offer a comprehensive range of construction materials from trusted brands at competitive prices.</p>
-                        <a href="#products" class="readmore_btn">View Products</a>
+            <h2 class="text-center mb-4 text-white fw-bold scroll-reveal">MATERIAL INDEX <span class="highlight-text">// PRODUCTS</span></h2>
+            <!-- SUBTITLE COLOR CHANGED TO ACCENT GREEN -->
+            <p class="text-center mb-5 subtitle-accent scroll-reveal" style="transition-delay: 0.1s;">Browse our curated catalog of essential construction components.</p>
+
+            <!-- Search Bar -->
+            <div class="row justify-content-center mb-5 scroll-reveal" style="transition-delay: 0.2s;">
+                <div class="col-lg-8">
+                    <div class="input-group input-group-lg">
+                        <input type="text" class="form-control futuristic-search" placeholder="Search for Cement, Steel, Sand, or Tiles..." aria-label="Product Search">
+                        <button class="btn futuristic-button" type="button" style="border-width: 1px; color: var(--text-light); border-color: var(--border-color);" onmouseover="this.style.borderColor=getComputedStyle(document.documentElement).getPropertyValue('--accent-green');" onmouseout="this.style.borderColor=getComputedStyle(document.documentElement).getPropertyValue('--border-color');">
+                            <i class="bi bi-search"></i> Scan
+                        </button>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <img src="{{ asset('dist/images/about1-img.png') }}" class="about_img" alt="Klampis Depo Store" style="width: 300px; height: 300px; object-fit: cover;">
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Products Section -->
-    <section class="coffee_section layout_padding" id="products">
-        <div class="container">
-            <h1 class="coffee_taital">OUR PRODUCT CATEGORIES</h1>
-        </div>
-
-        <div class="coffee_section_2">
-            <div id="main_slider" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="coffee_img"><img src="{{ asset('dist/images/cement-img.png') }}" alt="Cement & Concrete"></div>
-                                    <div class="coffee_box">
-                                        <h3 class="types_text">CEMENT & CONCRETE</h3>
-                                        <p class="looking_text">High-quality cement, ready-mix concrete, and concrete blocks for all construction needs.</p>
-                                        <a href="#" class="read_bt">View Details</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="coffee_img"><img src="{{ asset('dist/images/steel-img.png') }}" alt="Steel & Metal"></div>
-                                    <div class="coffee_box">
-                                        <h3 class="types_text">STEEL & METAL</h3>
-                                        <p class="looking_text">Rebar, steel beams, metal sheets, and structural steel materials.</p>
-                                        <a href="#" class="read_bt">View Details</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="coffee_img"><img src="{{ asset('dist/images/lumber-img.png') }}" alt="Lumber & Wood"></div>
-                                    <div class="coffee_box">
-                                        <h3 class="types_text">LUMBER & WOOD</h3>
-                                        <p class="looking_text">Premium lumber, plywood, and wooden materials for construction.</p>
-                                        <a href="#" class="read_bt">View Details</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="coffee_img"><img src="{{ asset('dist/images/tiles-img.png') }}" alt="Tiles & Flooring"></div>
-                                    <div class="coffee_box">
-                                        <h3 class="types_text">TILES & FLOORING</h3>
-                                        <p class="looking_text">Ceramic tiles, marble, granite, and various flooring options.</p>
-                                        <a href="#" class="read_bt">View Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="coffee_img"><img src="{{ asset('dist/images/cement-img.png') }}" alt="Paint & Finishes"></div>
-                                    <div class="coffee_box">
-                                        <h3 class="types_text">PAINT & FINISHES</h3>
-                                        <p class="looking_text">Wide selection of paints, primers, and finishing materials.</p>
-                                        <a href="#" class="read_bt">View Details</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="coffee_img"><img src="{{ asset('dist/images/steel-img.png') }}" alt="Tools & Hardware"></div>
-                                    <div class="coffee_box">
-                                        <h3 class="types_text">TOOLS & HARDWARE</h3>
-                                        <p class="looking_text">Professional tools, fasteners, and hardware supplies.</p>
-                                        <a href="#" class="read_bt">View Details</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="coffee_img"><img src="{{ asset('dist/images/lumber-img.png') }}" alt="Electrical Supplies"></div>
-                                    <div class="coffee_box">
-                                        <h3 class="types_text">ELECTRICAL SUPPLIES</h3>
-                                        <p class="looking_text">Cables, switches, outlets, and electrical installation materials.</p>
-                                        <a href="#" class="read_bt">View Details</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="coffee_img"><img src="{{ asset('dist/images/tiles-img.png') }}" alt="Plumbing Materials"></div>
-                                    <div class="coffee_box">
-                                        <h3 class="types_text">PLUMBING MATERIALS</h3>
-                                        <p class="looking_text">Pipes, fittings, fixtures, and plumbing installation supplies.</p>
-                                        <a href="#" class="read_bt">View Details</a>
-                                    </div>
-                                </div>
-                            </div>
+            <!-- Product Grid -->
+            <div class="row g-4">
+                <!-- Dummy Product 1: High-Density Cement -->
+                <div class="col-sm-6 col-md-4 col-lg-3 scroll-reveal" style="transition-delay: 0.3s;">
+                    <div class="futuristic-card p-3 h-100">
+                        <img src="https://placehold.co/600x400/3c3c3c/a0a0a0?text=HD+Cement" class="product-image mb-3" alt="High Density Cement Placeholder">
+                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill mb-2">FOUNDATION</span>
+                        <h5 class="text-white">Hydro-Sealed Cement (HS-10)</h5>
+                        <p class="text-muted small mb-3">Extreme weather resistance for critical structures.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="lead highlight-text mb-0 fw-bold">IDR 58k</p>
+                            <a href="https://www.tokopedia.com/klampisdepo" target="_blank" class="btn btn-sm futuristic-button">Buy Now</a>
                         </div>
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#main_slider" data-slide="prev">
-                    <i class="fa fa-arrow-left"></i>
-                </a>
-                <a class="carousel-control-next" href="#main_slider" data-slide="next">
-                    <i class="fa fa-arrow-right"></i>
+
+                <!-- Dummy Product 2: Structural Steel Rebar -->
+                <div class="col-sm-6 col-md-4 col-lg-3 scroll-reveal" style="transition-delay: 0.4s;">
+                    <div class="futuristic-card p-3 h-100">
+                        <img src="https://placehold.co/600x400/3c3c3c/a0a0a0?text=Rebar+Steel" class="product-image mb-3" alt="Structural Steel Placeholder">
+                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill mb-2">FRAMEWORK</span>
+                        <h5 class="text-white">Grade A-Tension Rebar (12mm)</h5>
+                        <p class="text-muted small mb-3">High tensile strength, optimized for seismic resilience.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="lead highlight-text mb-0 fw-bold">IDR 92k / pc</p>
+                            <a href="https://www.tokopedia.com/klampisdepo" target="_blank" class="btn btn-sm futuristic-button">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dummy Product 3: Ceramic Floor Tile -->
+                <div class="col-sm-6 col-md-4 col-lg-3 scroll-reveal" style="transition-delay: 0.5s;">
+                    <div class="futuristic-card p-3 h-100">
+                        <img src="https://placehold.co/600x400/3c3c3c/a0a0a0?text=Ceramic+Tile" class="product-image mb-3" alt="Ceramic Tile Placeholder">
+                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill mb-2">FINISHING</span>
+                        <h5 class="text-white">Neo-Polished Ceramic (60x60)</h5>
+                        <p class="text-muted small mb-3">Sleek, scratch-resistant surface for modern interiors.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="lead highlight-text mb-0 fw-bold">IDR 125k / box</p>
+                            <a href="https://www.tokopedia.com/klampisdepo" target="_blank" class="btn btn-sm futuristic-button">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dummy Product 4: Concrete Sand Aggregate -->
+                <div class="col-sm-6 col-md-4 col-lg-3 scroll-reveal" style="transition-delay: 0.6s;">
+                    <div class="futuristic-card p-3 h-100">
+                        <img src="https://placehold.co/600x400/3c3c3c/a0a0a0?text=Concrete+Sand" class="product-image mb-3" alt="Concrete Sand Placeholder">
+                        <span class="badge bg-info-subtle text-info border border-info-subtle rounded-pill mb-2">AGGREGATE</span>
+                        <h5 class="text-white">Washed & Filtered River Sand</h5>
+                        <p class="text-muted small mb-3">Clean, optimal grain size for high-quality concrete mix.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="lead highlight-text mb-0 fw-bold">IDR 350k / m³</p>
+                            <a href="https://www.tokopedia.com/klampisdepo" target="_blank" class="btn btn-sm futuristic-button">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5 scroll-reveal" style="transition-delay: 0.7s;">
+                 <a href="https://www.tokopedia.com/klampisdepo" target="_blank" class="btn btn-lg futuristic-button w-50">
+                    <i class="bi bi-shop me-2"></i> View All 500+ Items on Tokopedia
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section class="client_section layout_padding" id="services">
+    <!-- Service & Value Proposition Section -->
+    <section id="services" class="py-5 bg-black" style="border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
         <div class="container">
-            <div id="custom_slider" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <h1 class="about_taital">Our Services</h1>
-                        <div class="client_section_2">
-                            <div class="client_taital_main">
-                                <div class="client_left">
-                                    <img src="{{ asset('dist/images/about1-img.png') }}" alt="Delivery Service" class="client_img">
-                                </div>
-                                <div class="client_right">
-                                    <h3 class="moark_text">Affordable Delivery</h3>
-                                    <p class="client_text">We provide affordable delivery service for orders above minimum purchase within Surabaya city area. Our professional delivery team ensures your materials arrive safely and on time at your construction site.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <h1 class="about_taital">Expert Consultation</h1>
-                        <div class="client_section_2">
-                            <div class="client_taital_main">
-                                <div class="client_left">
-                                    <img src="{{ asset('dist/images/about1-img.png') }}" alt="Expert Consultation" class="client_img">
-                                </div>
-                                <div class="client_right">
-                                    <h3 class="moark_text">Material Estimation</h3>
-                                    <p class="client_text">Our experienced team provides professional material calculation and estimation services for your construction projects. Get expert advice on material selection, quantities, and cost-effective solutions.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <h1 class="about_taital">Online Shopping</h1>
-                        <div class="client_section_2">
-                            <div class="client_taital_main">
-                                <div class="client_left">
-                                    <img src="{{ asset('dist/images/about1-img.png') }}" alt="Online Shopping" class="client_img">
-                                </div>
-                                <div class="client_right">
-                                    <h3 class="moark_text">Shop Online</h3>
-                                    <p class="client_text">Visit our online store on Tokopedia and other e-commerce platforms. Browse our complete catalog, check prices, and place orders from the comfort of your home or office.</p>
-                                </div>
-                            </div>
-                        </div>
+            <h2 class="text-center mb-5 text-white fw-bold scroll-reveal">ADVANCED LOGISTICS <span class="highlight-text">// EFFICIENCY</span></h2>
+
+            <div class="row g-4 text-center">
+                <!-- Feature 1 -->
+                <div class="col-md-4 scroll-reveal" style="transition-delay: 0.1s;">
+                    <div class="futuristic-card p-4 h-100">
+                        <i class="bi bi-truck-flatbed text-white mb-3" style="font-size: 3rem; color: var(--accent-green) !important;"></i>
+                        <h4 class="text-white">Rapid Deployment</h4>
+                        <p class="text-muted">Guaranteed delivery within the Surabaya radius. Materials on-site when you need them, not days later.</p>
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#custom_slider" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#custom_slider" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+                <!-- Feature 2 -->
+                <div class="col-md-4 scroll-reveal" style="transition-delay: 0.2s;">
+                    <div class="futuristic-card p-4 h-100">
+                        <i class="bi bi-shield-check text-white mb-3" style="font-size: 3rem; color: var(--accent-green) !important;"></i>
+                        <h4 class="text-white">Certified Quality</h4>
+                        <p class="text-muted">Every product is sourced from certified suppliers and undergoes rigorous quality assurance protocols.</p>
+                    </div>
+                </div>
+                <!-- Feature 3 -->
+                <div class="col-md-4 scroll-reveal" style="transition-delay: 0.3s;">
+                    <div class="futuristic-card p-4 h-100">
+                        <i class="bi bi-cpu text-white mb-3" style="font-size: 3rem; color: var(--accent-green) !important;"></i>
+                        <h4 class="text-white">Project Consultation</h4>
+                        <p class="text-muted">Leverage our decades of experience. Get expert advice on material quantities and specifications.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="contact_section layout_padding" id="contact">
+    <!-- Map and Contact Section -->
+    <section id="contact" class="py-5">
         <div class="container">
-            <h1 class="contact_taital">Get In Touch</h1>
-        </div>
-        <div class="container-fluid">
-            <div class="contact_section_2">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="mail_section_1 text-center">
-                            <a href="https://wa.me/6285100549376?text=Halo%2C%20saya%20ingin%20bertanya%20tentang%20barang%20Anda."
-                               target="_blank"
-                               class="btn btn-success"
-                               style="padding: 12px 24px; font-size: 18px; border-radius: 8px; background-color: #25D366; color: white; text-decoration: none;">
-                                <i class="fa fa-whatsapp" style="margin-right: 8px;"></i> Chat via WhatsApp
+            <div class="row g-5">
+                <!-- Location and Map -->
+                <div class="col-lg-7">
+                    <h3 class="text-white fw-bold mb-4 scroll-reveal">OPERATION CENTER <span class="highlight-text">// LOCATION</span></h3>
+                    <div class="futuristic-card p-3 scroll-reveal" style="aspect-ratio: 16 / 9; transition-delay: 0.1s;">
+                         <!-- Google Map Embed (using a placeholder iframe for demonstration) -->
+                         <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.550186591176!2d112.77583337583344!3d-7.291307073289063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb21a7196655%3A0xc6e480d199990263!2sUD.Klampis%20Depo!5e0!3m2!1sen!2sid!4v1716912345678!5m2!1sen!2sid"
+                            width="100%"
+                            height="100%"
+                            style="border:0; border-radius: 8px;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                         </iframe>
+                    </div>
+                    <p class="text-muted mt-3 small scroll-reveal" style="transition-delay: 0.2s;">
+                        <i class="bi bi-geo-alt-fill me-1 highlight-text"></i> Address: UD.Klampis Depo, Jl. Klampis Harapan No.G-168, Klampis Ngasem, Kec. Sukolilo, Surabaya, Jawa Timur 60117
+                    </p>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-lg-5">
+                    <h3 class="text-white fw-bold mb-4 scroll-reveal">DIRECT ACCESS <span class="highlight-text">// CONNECT</span></h3>
+
+                    <!-- Tokopedia Card -->
+                    <div class="futuristic-card p-4 mb-3 d-flex align-items-center scroll-reveal" style="transition-delay: 0.3s;">
+                        <i class="bi bi-cart4 display-6 me-4" style="color: var(--accent-green);"></i>
+                        <div>
+                            <h5 class="text-white mb-1">Official E-Store</h5>
+                            <a href="https://www.tokopedia.com/klampisdepo" target="_blank" class="text-decoration-none text-muted small footer-link">
+                                Tokopedia /klampisdepo <i class="bi bi-box-arrow-up-right"></i>
                             </a>
                         </div>
                     </div>
-                    <div class="map_main">
-                        <div class="map-responsive">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.125332253869!2d112.7793589!3d-7.2952918!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fa5b4b0bfce1%3A0xa07b8b8602f4a3db!2sUD.%20Klampis%20Depo!5e0!3m2!1sen!2sid!4v1692960721066!5m2!1sen!2sid"
-                                width="600"
-                                height="450"
-                                frameborder="0"
-                                style="border:0; width: 100%;"
-                                allowfullscreen=""
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade">
-                            </iframe>
+
+                    <!-- WhatsApp Card -->
+                    <div class="futuristic-card p-4 mb-3 d-flex align-items-center scroll-reveal" style="transition-delay: 0.4s;">
+                        <i class="bi bi-whatsapp display-6 me-4" style="color: var(--accent-green);"></i>
+                        <div>
+                            <h5 class="text-white mb-1">Quick Contact (WhatsApp)</h5>
+                            <!-- Formatted for click-to-chat -->
+                            <a href="https://wa.me/6285100549376" target="_blank" class="text-decoration-none text-muted small footer-link">
+                                +62 85100549376 <i class="bi bi-box-arrow-up-right"></i>
+                            </a>
                         </div>
                     </div>
+
+                    <!-- Hours Card -->
+                    <div class="futuristic-card p-4 d-flex align-items-center scroll-reveal" style="transition-delay: 0.5s;">
+                        <i class="bi bi-calendar-check display-6 me-4" style="color: var(--accent-green);"></i>
+                        <div>
+                            <h5 class="text-white mb-1">Operational Hours</h5>
+                            <p class="text-muted small mb-0">Monday - Saturday: 07:00 - 17:00 WIB</p>
+                            <p class="text-muted small mb-0">Sunday: Closed</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer_section layout_padding">
-        <div class="container">
-            <div class="footer_social_icon">
-                <ul>
-                    <li><a href="#" aria-label="Facebook"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="#" aria-label="Twitter"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="#" aria-label="LinkedIn"><i class="fa fa-linkedin"></i></a></li>
-                    <li><a href="#" aria-label="Instagram"><i class="fa fa-instagram"></i></a></li>
-                </ul>
-            </div>
-            <div class="location_text">
-                <ul>
-                    <li>
-                        <a href="tel:+6285100549376">
-                            <i class="fa fa-phone"></i>
-                            <span class="padding_left_10">+6285100549376</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="mailto:klampisdepo@gmail.com">
-                            <i class="fa fa-envelope"></i>
-                            <span class="padding_left_10">klampisdepo@gmail.com</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.google.com/maps?ll=-7.295334,112.779541&z=16&t=m&hl=en&gl=ID&mapclient=embed&cid=11563989875895346139">
-                            <i class="fa fa-map-marker"></i>
-                            <span class="padding_left_10">Jl. Klampis Harapan, Surabaya</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+    <footer class="bg-black py-4 mt-5" style="border-top: 1px solid var(--border-color);">
+        <div class="container text-center">
+            <p class="text-muted mb-0 small">&copy; 2025 KLAMPIS DEPO. All rights reserved. | Powered by <span class="highlight-text">Innovation</span>.</p>
         </div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="{{ asset('dist/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('dist/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('dist/js/custom.js') }}"></script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+
+    <!-- Custom JavaScript for Logic and Animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // =========================================================
+            // 1. Dynamic Store Status Logic
+            // =========================================================
+            function updateStoreStatus() {
+                const now = new Date();
+                const day = now.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+                const hour = now.getHours();
+
+                // Store Hours: 7am (7) to 5pm (17), Monday (1) to Saturday (6)
+                const isWeekday = (day >= 1 && day <= 6);
+                const isTimeOpen = (hour >= 7 && hour < 17); // Close is 5pm, so < 17
+
+                const isOpen = isWeekday && isTimeOpen;
+
+                const indicator = document.getElementById('store-status-indicator');
+                const text = document.getElementById('store-status-text');
+
+                // Reset classes
+                indicator.classList.remove('status-open', 'status-closed');
+
+                if (isOpen) {
+                    indicator.classList.add('status-open');
+                    text.innerHTML = '<span class="highlight-text">STATUS: OPERATIONAL</span> (Open until 17:00 WIB)';
+                    text.style.color = 'var(--accent-green)';
+                } else {
+                    indicator.classList.add('status-closed');
+                    text.innerHTML = '<span style="color: var(--accent-red);">STATUS: CLOSED</span> (Opens Mon-Sat 07:00 WIB)';
+                    text.style.color = 'var(--accent-red)';
+                }
+            }
+
+            // Run immediately and set an interval to update every minute
+            updateStoreStatus();
+            setInterval(updateStoreStatus, 60000);
+
+            // =========================================================
+            // 2. Scroll Reveal Animation Logic
+            // =========================================================
+            const scrollElements = document.querySelectorAll('.scroll-reveal');
+
+            const elementInView = (el, dividend = 1) => {
+                const elementTop = el.getBoundingClientRect().top;
+                // Check if the element top is less than (viewport height / dividend)
+                return (
+                    elementTop <=
+                    (window.innerHeight || document.documentElement.clientHeight) / dividend
+                );
+            };
+
+            const displayScrollElement = (element) => {
+                element.classList.add('visible');
+            };
+
+            const handleScrollAnimation = () => {
+                scrollElements.forEach((el) => {
+                    if (elementInView(el, 1.25)) {
+                        displayScrollElement(el);
+                    }
+                })
+            }
+
+            // Listen for scroll and run the handler
+            window.addEventListener('scroll', handleScrollAnimation);
+
+            // Initial check on load
+            handleScrollAnimation();
+
+            // =========================================================
+            // 3. Simple Button Hover Animation (CSS transition fallback)
+            // This is primarily handled by CSS, but good practice to show event listeners.
+            // =========================================================
+            const buttons = document.querySelectorAll('.futuristic-button');
+            buttons.forEach(btn => {
+                btn.addEventListener('mouseover', () => {
+                    btn.style.boxShadow = `0 0 10px var(--accent-green)`;
+                });
+                btn.addEventListener('mouseout', () => {
+                    btn.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>

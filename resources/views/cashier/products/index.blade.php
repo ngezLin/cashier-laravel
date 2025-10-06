@@ -24,7 +24,7 @@
             <tr>
                 <td>{{ $product->id }}</td>
                 <td>{{ $product->product_name }}</td>
-                <td>Rp {{ number_format($product->price) }}</td>
+                <td>Rp {{ number_format($product->sell_price) }}</td>
                 <td>{{ $product->stock }}</td>
                 <td>
                     <a href="{{ route('cashier.products.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>

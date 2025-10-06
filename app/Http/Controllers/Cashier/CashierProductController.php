@@ -22,8 +22,9 @@ class CashierProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
+            'product_name' => 'required|string|max:255',
+            'sell_price' => 'required|numeric',
+            'buy_price' => 'required|numeric',
             'stock' => 'required|integer',
         ]);
 
@@ -40,8 +41,9 @@ class CashierProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
+            'product_name' => 'required|string|max:255',
+            'sell_price' => 'required|numeric',
+            'buy_price' => 'required|numeric',
             'stock' => 'required|integer',
         ]);
 
