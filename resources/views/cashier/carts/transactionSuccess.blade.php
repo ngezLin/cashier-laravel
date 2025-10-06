@@ -31,9 +31,9 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Qty</th>
+                  <th>no</th>
                   <th>Product</th>
-                  {{-- <th>Description</th> --}}
+                  <th>Qty</th>
                   <th>Price</th>
                   <th>Subtotal</th>
                 </tr>
@@ -41,9 +41,9 @@
               <tbody>
                 @foreach($transaction->items as $item)
                   <tr>
-                    <td>{{ $item->quantity }}</td>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->product->product_name }}</td>
-                    {{-- <td>{{ $item->product->description ?? '-' }}</td> --}}
+                    <td>{{ $item->quantity }}</td>
                     <td>Rp{{ number_format($item->price, 0, ',', '.') }}</td>
                     <td>Rp{{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
                   </tr>

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('customer_amount')->nullable();
             $table->integer('change')->nullable();
             $table->boolean('is_refunded')->default(false);
+            $table->enum('status', ['draft', 'pending', 'completed']);
             $table->timestamps();
         });
     }

@@ -12,6 +12,7 @@ class Transaction extends Model
     'total',
     'customer_amount',
     'change',
+    'status',
     ];
     public function items()
     {

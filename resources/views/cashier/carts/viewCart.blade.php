@@ -8,6 +8,13 @@
     @if($cartItems->isEmpty())
         <p>Your cart is empty.</p>
     @else
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if(session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+
         <table class="table table-bordered mt-3">
             <thead>
                 <tr>
@@ -28,7 +35,20 @@
                     <tr>
                         <td>{{ $item->product->product_name }}</td>
                         <td>Rp{{ number_format($item->product->sell_price, 0, ',', '.') }}</td>
-                        <td>{{ $item->quantity }}</td>
+                        <td class="text-center">
+                            <form action="{{ route('cashier.cart.update', $item->id) }}" method="POST" class="d-inline-block">
+                                @csrf
+                                @method('PATCH')
+                                <div class="d-flex justify-content-center align-items-center" style="gap: 5px;">
+                                    <input type="number" name="quantity" value="{{ $item->quantity }}"
+                                        min="1" max="{{ $item->product->stock }}"
+                                        class="form-control text-center"
+                                        style="width:60px;height:32px;font-weight:bold;">
+                                </div>
+                            </form>
+                        </td>
+
+
                         <td>Rp{{ number_format($subtotal, 0, ',', '.') }}</td>
                         <td>
                             <form action="{{ route('cashier.cart.remove', $item->id) }}" method="POST">
@@ -49,7 +69,7 @@
         <!-- Payment Form -->
         <form action="{{ route('cashier.cart.checkout') }}" method="POST">
             @csrf
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="paymentMethod">Payment Method</label>
                 <select name="payment_method" id="paymentMethod" class="form-control">
                     <option value="cash">Cash</option>
@@ -58,12 +78,18 @@
                 </select>
             </div>
 
-    <div class="form-group">
-        <label for="customer_amount">Amount Given</label>
-        <input type="number" name="customer_amount" id="customer_amount" class="form-control" required min="{{ $total }}">
-    </div>
+            <div class="form-group mb-3">
+                <label for="customer_amount">Amount Given</label>
+                <input type="number" name="customer_amount" id="customer_amount" class="form-control" required min="{{ $total }}">
+            </div>
 
-            <button type="submit" class="btn btn-success">Checkout</button>
+            <button type="submit" class="btn btn-success">
+                Checkout
+            </button>
+            <button type="submit" formaction="{{ route('cashier.cart.saveDraft') }}" class="btn btn-warning">
+                Save as Draft
+            </button>
+
         </form>
     @endif
 </div>

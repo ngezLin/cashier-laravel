@@ -31,9 +31,20 @@ Route::middleware(['auth', 'role:cashier'])->prefix('cashier')->name('cashier.')
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::patch('/cart/{id}/update', [CartController::class, 'updateQuantity'])->name('cart.update');
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+
+    // ✅ Fitur Draft
+    Route::post('/cart/save-draft', [CartController::class, 'saveDraft'])->name('cart.saveDraft');
+    Route::get('/transactions/drafts', [CartController::class, 'showDrafts'])->name('transactions.drafts');
+    Route::post('/cart/load-draft/{id}', [CartController::class, 'loadDraft'])->name('cart.loadDraft');
+
     Route::get('/transaction-success/{transaction}', [CartController::class, 'transactionSuccess'])->name('transactions.success');
     Route::resource('transactions', TransactionController::class)->only(['index', 'show']);
     Route::post('/transactions/{transaction}/refund', [TransactionController::class, 'refund'])->name('transactions.refund');
+    Route::get('/cart/draft', [CartController::class, 'viewDraft'])->name('cart.draft');
 
+    //edit item
+    Route::resource('products', ProductController::class);
 });
+

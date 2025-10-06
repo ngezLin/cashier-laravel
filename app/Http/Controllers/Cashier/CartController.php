@@ -79,41 +79,168 @@ class CartController extends Controller
 
         $change = $customerAmount - $total;
 
-        $transaction = Transaction::create([
-            'user_id' => $user->id,
-            'total' => $total,
-            'customer_amount' => $customerAmount,
-            'change' => $change,
-        ]);
+        DB::beginTransaction();
+        try {
+            // Hapus draft lama milik user (kalau ada)
+            Transaction::where('user_id', $user->id)
+                ->where('status', 'draft')
+                ->delete();
 
-        foreach ($cartItems as $item) {
-            $product = $item->product;
+            $transaction = Transaction::create([
+                'user_id' => $user->id,
+                'total' => $total,
+                'customer_amount' => $customerAmount,
+                'change' => $change,
+                'status' => 'completed',
+            ]);
 
-            if ($product->stock < $item->quantity) {
-                return redirect()->back()->with('error', "Insufficient stock for {$product->product_name}.");
+            foreach ($cartItems as $item) {
+                $product = $item->product;
+
+                if ($product->stock < $item->quantity) {
+                    throw new \Exception("Insufficient stock for {$product->product_name}.");
+                }
+
+                $product->decrement('stock', $item->quantity);
+
+                TransactionItem::create([
+                    'transaction_id' => $transaction->id,
+                    'product_id' => $product->id,
+                    'quantity' => $item->quantity,
+                    'price' => $product->sell_price,
+                    'status' => 'completed',
+                ]);
             }
 
-            $product->decrement('stock', $item->quantity);
+            Cart::where('user_id', $user->id)->delete();
+            DB::commit();
 
-            TransactionItem::create([
-                'transaction_id' => $transaction->id,
-                'product_id' => $product->id,
-                'quantity' => $item->quantity,
-                'price' => $product->sell_price,
-            ]);
+            return redirect()->route('cashier.transactions.success', ['transaction' => $transaction->id]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Checkout failed: ' . $e->getMessage());
         }
-
-        Cart::where('user_id', $user->id)->delete();
-
-        // Redirect to success page
-        return redirect()->route('cashier.transactions.success', ['transaction' => $transaction->id]);
     }
+
 
 
     public function transactionSuccess(Transaction $transaction)
     {
         $transaction->load('items.product');
         return view('cashier.carts.transactionSuccess', compact('transaction'));
+    }
+
+    public function updateQuantity(Request $request, $id)
+    {
+        $request->validate([
+            'action' => 'required|in:increase,decrease',
+        ]);
+
+        $cartItem = Cart::where('user_id', auth()->id())->findOrFail($id);
+        $product = $cartItem->product;
+
+        if ($request->action === 'increase') {
+            if ($product->stock <= $cartItem->quantity) {
+                return redirect()->back()->with('error', 'Stock limit reached.');
+            }
+            $cartItem->increment('quantity');
+        } elseif ($request->action === 'decrease') {
+            if ($cartItem->quantity > 1) {
+                $cartItem->decrement('quantity');
+            } else {
+                $cartItem->delete();
+                return redirect()->back()->with('success', 'Item removed from cart.');
+            }
+        }
+
+        return redirect()->back()->with('success', 'Cart updated successfully.');
+    }
+
+    public function saveDraft(Request $request)
+    {
+        $user = auth()->user();
+        $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
+
+        if ($cartItems->isEmpty()) {
+            return redirect()->back()->with('error', 'Your cart is empty.');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $total = $cartItems->sum(fn($item) => $item->product->sell_price * $item->quantity);
+
+            $transaction = Transaction::create([
+                'user_id' => $user->id,
+                'total' => $total,
+                'status' => 'draft',
+                'customer_amount' => 0,
+                'change' => 0,
+            ]);
+
+            foreach ($cartItems as $item) {
+                TransactionItem::create([
+                    'transaction_id' => $transaction->id,
+                    'product_id' => $item->product->id,
+                    'quantity' => $item->quantity,
+                    'price' => $item->product->sell_price,
+                ]);
+            }
+
+            Cart::where('user_id', $user->id)->delete();
+
+            DB::commit();
+            return redirect()->route('cashier.transactions.drafts')->with('success', 'Draft saved successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to save draft.');
+        }
+    }
+
+    public function showDrafts()
+    {
+        $drafts = Transaction::with('items.product')
+            ->where('user_id', auth()->id())
+            ->where('status', 'draft')
+            ->latest()
+            ->get();
+
+        return view('cashier.carts.drafts', compact('drafts'));
+    }
+
+    public function loadDraft($id)
+    {
+        $draft = Transaction::with('items.product')
+            ->where('user_id', auth()->id())
+            ->where('status', 'draft')
+            ->findOrFail($id);
+
+        foreach ($draft->items as $item) {
+            Cart::updateOrCreate(
+                [
+                    'user_id' => auth()->id(),
+                    'product_id' => $item->product_id,
+                ],
+                [
+                    'quantity' => $item->quantity,
+                ]
+            );
+        }
+
+        $draft->delete(); // hapus draft setelah diload (opsional)
+
+        return redirect()->route('cashier.cart.index')->with('success', 'Draft loaded into cart!');
+    }
+
+    public function viewDraft()
+    {
+        $drafts = Transaction::with('items.product')
+            ->where('user_id', auth()->id())
+            ->where('status', 'draft')
+            ->latest()
+            ->get();
+
+        return view('cashier.carts.drafts', compact('drafts'));
     }
 
 }

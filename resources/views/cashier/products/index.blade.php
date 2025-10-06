@@ -4,13 +4,17 @@
 @section('content')
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
+        {{-- Form Search --}}
         <form action="{{ route('cashier.products.index') }}" method="GET" class="d-flex" style="gap: 0.5rem;">
             <input type="text" name="search" class="form-control form-control-sm" style="width: 200px;" placeholder="Search..." value="{{ request('search') }}">
             <button type="submit" class="btn btn-outline-secondary btn-sm">Search</button>
         </form>
-        <form>
+
+        {{-- Cart & Draft Buttons --}}
+        <div class="d-flex" style="gap: 0.5rem;">
             <a href="{{ route('cashier.cart.index') }}" class="btn btn-primary btn-sm">View Cart</a>
-        </form>
+            <a href="{{ route('cashier.cart.draft') }}" class="btn btn-warning btn-sm">View Draft</a>
+        </div>
     </div>
 
     @if(session('success'))
@@ -40,6 +44,7 @@
                 </div>
             </div>
         @endforeach
+
         <div class="d-flex justify-content-center mt-4">
             {{ $products->links() }}
         </div>
