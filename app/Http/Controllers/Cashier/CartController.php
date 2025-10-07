@@ -23,7 +23,14 @@ class CartController extends Controller
 
         $products = $query->paginate(9)->withQueryString();
 
-        return view('cashier.products.list', compact('products'));
+        // Tambahkan mini cart data
+        $cartItems = Cart::with('product')
+            ->where('user_id', auth()->id())
+            ->get();
+
+        $cartTotal = $cartItems->sum(fn($item) => $item->product->sell_price * $item->quantity);
+
+        return view('cashier.products.list', compact('products', 'cartItems', 'cartTotal'));
     }
 
 
@@ -55,11 +62,18 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Item added to cart!');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $cartItems = Cart::with('product')->where('user_id', auth()->id())->get();
-        return view('cashier.carts.viewCart', compact('cartItems'));
+        $cartTotal = $cartItems->sum(fn($item) => $item->product->sell_price * $item->quantity);
+
+        if ($request->ajax()) {
+            return view('cashier.partials.miniCart', compact('cartItems', 'cartTotal'))->render();
+        }
+
+        return view('cashier.carts.viewCart', compact('cartItems', 'cartTotal'));
     }
+
 
     public function checkout(Request $request)
     {
