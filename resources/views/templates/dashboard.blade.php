@@ -94,6 +94,21 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('admin.products.list') }}" class="nav-link">
+                                <i class="fa-solid fa-box"></i> <p>New Transaction</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.drafts') }}" class="nav-link">
+                                <i class="fa-solid fa-file"></i> <p>Drafts</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.transactions.index') }}" class="nav-link">
+                                <i class="fa-solid fa-clock-rotate-left"></i> <p>Transaction History</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('admin.products.index') }}" class="nav-link">
                                 <i class="fa-solid fa-eye"></i> <p>View Products</p>
                             </a>
@@ -111,11 +126,11 @@
                                 <i class="fa-solid fa-plus"></i> <p>Transactions</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{ route('cashier.products.index') }}" class="nav-link">
                                 <i class="fa-solid fa-eye"></i> <p>View Products</p>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="{{ route('cashier.transactions.index') }}" class="nav-link">
                                 <i class="fa-solid fa-clock-rotate-left"></i> <p>Transaction History</p>

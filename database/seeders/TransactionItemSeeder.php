@@ -12,17 +12,15 @@ class TransactionItemSeeder extends Seeder
         $productIds = DB::table('products')->pluck('id')->toArray();
         $transactionIds = DB::table('transactions')->pluck('id')->toArray();
 
-        if (empty($productIds) || empty($transactionIds)) {
-            return;
-        }
+        if (empty($productIds) || empty($transactionIds)) return;
 
         $items = [];
 
         foreach ($transactionIds as $transactionId) {
-            $itemCount = rand(1, 5);
-            $selectedProducts = array_rand(array_flip($productIds), $itemCount);
+            $itemCount = rand(1, min(5, count($productIds))); // maksimal 5 item per transaksi
+            $selectedProducts = (array) array_rand(array_flip($productIds), $itemCount);
 
-            foreach ((array) $selectedProducts as $productId) {
+            foreach ($selectedProducts as $productId) {
                 $quantity = rand(1, 5);
                 $product = DB::table('products')->where('id', $productId)->first();
 

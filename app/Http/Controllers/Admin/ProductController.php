@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -89,5 +90,41 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->route('admin.products.index');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'csv_file' => 'required|mimes:csv,txt',
+        ]);
+
+        $file = $request->file('csv_file');
+        $path = $file->getRealPath();
+        $data = array_map(function($line) {
+            return str_getcsv($line, ","); // delimiter comma
+        }, file($path));
+
+        // dd($data);
+
+        $header = array_map('trim', $data[0]);
+        // unset($data[0]);
+
+        foreach ($data as $row) {
+            $row = array_combine($header, $row);
+
+            $validator = Validator::make($row, [
+                'product_name' => 'required',
+                'sell_price' => 'required|numeric',
+                'buy_price' => 'required|numeric',
+                'stock' => 'required|integer',
+            ]);
+
+            if ($validator->fails()) continue;
+
+            Product::create($row);
+        }
+
+
+        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diimport!');
     }
 }

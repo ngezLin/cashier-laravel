@@ -11,10 +11,7 @@ class TransactionSeeder extends Seeder
     {
         $users = DB::table('users')->pluck('id')->toArray();
 
-        if (empty($users)) {
-            // Jangan lanjutkan jika tidak ada user
-            return;
-        }
+        if (empty($users)) return;
 
         $transactions = [];
 
@@ -28,6 +25,9 @@ class TransactionSeeder extends Seeder
                 'total' => $total,
                 'customer_amount' => $customerAmount,
                 'change' => $change,
+                'payment_method' => ['cash', 'card'][array_rand(['cash', 'card'])],
+                'note' => rand(0, 1) ? 'Sample note ' . $i : null,
+                'status' => ['draft', 'refunded', 'completed'][array_rand(['draft', 'refunded', 'completed'])],
                 'is_refunded' => false,
                 'created_at' => now(),
                 'updated_at' => now(),

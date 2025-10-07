@@ -11,6 +11,13 @@
                     {{ session('success') }}
                 </div>
             @endif
+            <form action="{{ route('admin.products.import') }}" method="POST" enctype="multipart/form-data" class="mb-3">
+                @csrf
+                <div class="input-group">
+                    <input type="file" name="csv_file" class="form-control" accept=".csv" required>
+                    <button class="btn btn-success" type="submit">Import CSV</button>
+                </div>
+            </form>
 
             <div class="card">
                 <div class="card-header">
@@ -31,6 +38,7 @@
 
                 </div>
                 <!-- /.card-header -->
+
 
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">

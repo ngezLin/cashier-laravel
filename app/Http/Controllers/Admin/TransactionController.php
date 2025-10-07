@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Cashier;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -9,7 +9,6 @@ use App\Models\Transaction;
 use App\Models\TransactionItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -23,11 +22,10 @@ class TransactionController extends Controller
         }
 
         $products = $query->paginate(9)->withQueryString();
-
-        $cartItems = Cart::with('product')->where('user_id', auth()->id())->get();
+        $cartItems = Cart::with('product')->get(); // admin bisa lihat semua cart, bisa sesuaikan
         $cartTotal = $cartItems->sum(fn($item) => $item->product->sell_price * $item->quantity);
 
-        return view('cashier.products.list', compact('products', 'cartItems', 'cartTotal'));
+        return view('admin.products.list', compact('products', 'cartItems', 'cartTotal'));
     }
 
     // ➕ Tambah ke cart
@@ -38,28 +36,54 @@ class TransactionController extends Controller
             'quantity' => 'required|integer|min:1',
         ]);
 
+        $userId = auth()->id(); // ambil user yg login
+
         Cart::updateOrCreate(
-            ['user_id' => auth()->id(), 'product_id' => $request->product_id],
-            ['quantity' => DB::raw('quantity + ' . $request->quantity)]
+            ['product_id' => $request->product_id, 'user_id' => $userId], // include user_id di where
+            ['quantity' => DB::raw('quantity + ' . $request->quantity), 'user_id' => $userId] // pastikan user_id tersimpan
         );
 
         return redirect()->back()->with('success', 'Item added to cart!');
     }
 
+
     // 🧾 Lihat cart
     public function viewCart()
     {
-        $cartItems = Cart::with('product')->where('user_id', auth()->id())->get();
+        $cartItems = Cart::with('product')->get();
         $cartTotal = $cartItems->sum(fn($i) => $i->product->sell_price * $i->quantity);
-        return view('cashier.transactions.viewCart', compact('cartItems', 'cartTotal'));
+        return view('admin.transactions.viewCart', compact('cartItems', 'cartTotal'));
     }
 
     // ❌ Hapus item cart
     public function removeItem($id)
     {
-        $item = Cart::where('user_id', auth()->id())->findOrFail($id);
+        $item = Cart::findOrFail($id);
         $item->delete();
-        return redirect()->back()->with('success', 'Item removed from cart.');
+        return redirect()->back()->with('success', 'Item removed.');
+    }
+
+    // 🔄 Update quantity
+    public function updateQuantity(Request $request, $id)
+    {
+        $request->validate(['action' => 'required|in:increase,decrease']);
+        $cartItem = Cart::findOrFail($id);
+        $product = $cartItem->product;
+
+        if ($request->action === 'increase') {
+            if ($product->stock <= $cartItem->quantity) {
+                return redirect()->back()->with('error', 'Stock limit reached.');
+            }
+            $cartItem->increment('quantity');
+        } elseif ($request->action === 'decrease') {
+            if ($cartItem->quantity > 1) {
+                $cartItem->decrement('quantity');
+            } else {
+                $cartItem->delete();
+            }
+        }
+
+        return redirect()->back()->with('success', 'Cart updated successfully.');
     }
 
     // 💾 Simpan draft
@@ -93,10 +117,10 @@ class TransactionController extends Controller
             Cart::where('user_id', $user->id)->delete();
         });
 
-        return redirect()->route('cashier.transactions.drafts')->with('success', 'Draft saved.');
+        return redirect()->route('admin.drafts')->with('success', 'Draft saved.');
     }
 
-    // 📂 Lihat semua draft
+    // 📂 Lihat draft
     public function drafts()
     {
         $drafts = Transaction::with('items.product')
@@ -105,7 +129,7 @@ class TransactionController extends Controller
             ->latest()
             ->get();
 
-        return view('cashier.transactions.drafts', compact('drafts'));
+        return view('admin.transactions.drafts', compact('drafts'));
     }
 
     // 📤 Load draft ke cart
@@ -125,10 +149,12 @@ class TransactionController extends Controller
 
         $draft->delete();
 
-        return redirect()->route('cashier.cart.index')->with('success', 'Draft loaded into cart!');
+        // return redirect()->route('admin.cart.index')->with('success', 'Draft loaded into cart!');
+        return redirect()->route('admin.cart')->with('success', 'Draft loaded into cart!');
+
     }
 
-    // ✅ Checkout cart
+    // ✅ Checkout
     public function checkout(Request $request)
     {
         $user = auth()->user();
@@ -173,14 +199,15 @@ class TransactionController extends Controller
             Cart::where('user_id', $user->id)->delete();
         });
 
-        return redirect()->route('cashier.transactions.success', $trx->id);
+        return redirect()->route('admin.transactions.success', $trx->id);
     }
+
 
     // 🧾 Invoice sukses
     public function success(Transaction $transaction)
     {
         $transaction->load('items.product', 'user');
-        return view('cashier.transactions.transactionSuccess', compact('transaction'));
+        return view('admin.transactions.transactionSuccess', compact('transaction'));
     }
 
     // 📜 Riwayat transaksi
@@ -190,14 +217,14 @@ class TransactionController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('cashier.transactions.index', compact('transactions'));
+        return view('admin.transactions.index', compact('transactions'));
     }
 
     // 🔍 Detail transaksi
     public function show(Transaction $transaction)
     {
         $transaction->load('items.product', 'user');
-        return view('cashier.transactions.show', compact('transaction'));
+        return view('admin.transactions.show', compact('transaction'));
     }
 
     // 🔁 Refund

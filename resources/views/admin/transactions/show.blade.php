@@ -1,0 +1,65 @@
+@extends('templates.dashboard')
+@include('templates.script')
+
+@section('header')
+<div class="row mb-2">
+  <div class="col-sm-6">
+    <h1>Transaction Details</h1>
+  </div>
+  <div class="col-sm-6">
+    <ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.transactions.index') }}">Transaction History</a></li>
+    <li class="breadcrumb-item active">Transaction #{{ $transaction->id }}</li>
+    </ol>
+  </div>
+</div>
+@endsection
+
+@section('content')
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Transaction #{{ $transaction->id }}</h3>
+  </div>
+  <div class="card-body">
+    <p><strong>Date:</strong> {{ $transaction->created_at->format('d M Y H:i') }}</p>
+    <p><strong>Cashier:</strong> {{ $transaction->user->name }}</p>
+    <p><strong>Payment Method:</strong> {{ $transaction->payment_method ?? '-' }}</p>
+    @if($transaction->note)
+        <p><strong>Note:</strong> {{ $transaction->note }}</p>
+    @endif
+
+    <hr>
+
+    <h5>Items</h5>
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>No</th>
+          <th>Product</th>
+          <th class="text-center">Quantity</th>
+          <th class="text-end">Price</th>
+          <th class="text-end">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach($transaction->items as $index => $item)
+        <tr>
+          <td>{{ $index + 1 }}</td>
+          <td>{{ $item->product->product_name }}</td>
+          <td class="text-center">{{ $item->quantity }}</td>
+          <td class="text-end">Rp{{ number_format($item->price, 0, ',', '.') }}</td>
+          <td class="text-end">Rp{{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
+        </tr>
+        @endforeach
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="4" class="text-center">Total</th>
+          <th class="text-end">Rp{{ number_format($transaction->total, 0, ',', '.') }}</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+@endsection
