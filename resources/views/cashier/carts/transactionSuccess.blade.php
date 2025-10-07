@@ -1,4 +1,4 @@
-@extends('templates.dashboardCashier')
+@extends('templates.dashboard')
 @include('templates.script')
 
 <link rel="stylesheet" href="{{ asset('css/print.css') }}">

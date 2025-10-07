@@ -1,5 +1,5 @@
 @include('templates.script')
-@extends('templates.dashboardAdmin')
+@extends('templates.dashboard')
 
 @section('content')
 <div class="row mt-4">

@@ -21,4 +21,4 @@
 </html> --}}
 
 @include('templates.script')
-@extends('templates.dashboardCashier')
+@extends('templates.dashboard')

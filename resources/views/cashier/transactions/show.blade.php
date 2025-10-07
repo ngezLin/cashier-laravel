@@ -1,4 +1,4 @@
-@extends('templates.dashboardCashier')
+@extends('templates.dashboard')
 @include('templates.script')
 
 @section('header')

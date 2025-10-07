@@ -1,5 +1,5 @@
 @include('templates.script')
-@extends('templates.dashboardCashier')
+@extends('templates.dashboard')
 
 @section('content')
 <div class="container mt-4">
