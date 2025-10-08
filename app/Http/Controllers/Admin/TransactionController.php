@@ -242,4 +242,14 @@ class TransactionController extends Controller
 
         return back()->with('success', 'Refund processed.');
     }
+
+    public function clearCart()
+    {
+        $userId = auth()->id();
+
+        // Hapus semua item cart milik user
+        \App\Models\Cart::where('user_id', $userId)->delete();
+
+        return redirect()->back()->with('success', 'Cart cleared successfully!');
+    }
 }

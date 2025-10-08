@@ -28,15 +28,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/products-list', [AdminTransactionController::class, 'showProducts'])->name('products.list');
 
     // Products & Cart
-    Route::get('/products-list', [AdminTransactionController::class, 'showProducts'])->name('products.list');
     Route::get('/cart', [AdminTransactionController::class, 'viewCart'])->name('cart');
     Route::post('/cart/add', [AdminTransactionController::class, 'addToCart'])->name('cart.add');
     Route::delete('/cart/{id}', [AdminTransactionController::class, 'removeItem'])->name('cart.remove');
     Route::patch('/cart/{id}/update', [AdminTransactionController::class, 'updateQuantity'])->name('cart.update');
     Route::post('/cart/checkout', [AdminTransactionController::class, 'checkout'])->name('cart.checkout');
+    Route::post('/cart/clear', [AdminTransactionController::class, 'clearCart'])->name('cart.clear');
 
         // Draft
     Route::post('/cart/save-draft', [AdminTransactionController::class, 'saveDraft'])->name('cart.saveDraft');
+    Route::post('/drafts/save', [AdminTransactionController::class, 'saveDraft'])->name('drafts.save');
+
     Route::get('/drafts', [AdminTransactionController::class, 'drafts'])->name('drafts');
     Route::post('/cart/load-draft/{id}', [AdminTransactionController::class, 'loadDraft'])->name('cart.loadDraft');
 
