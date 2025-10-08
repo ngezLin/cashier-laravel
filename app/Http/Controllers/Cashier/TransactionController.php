@@ -27,7 +27,7 @@ class TransactionController extends Controller
         $cartItems = Cart::with('product')->where('user_id', auth()->id())->get();
         $cartTotal = $cartItems->sum(fn($item) => $item->product->sell_price * $item->quantity);
 
-        return view('cashier.products.list', compact('products', 'cartItems', 'cartTotal'));
+        return view('cashier.transactions.list', compact('products', 'cartItems', 'cartTotal'));
     }
 
     // ➕ Tambah ke cart
@@ -38,10 +38,47 @@ class TransactionController extends Controller
             'quantity' => 'required|integer|min:1',
         ]);
 
+        $userId = auth()->id();
+        $product = Product::findOrFail($request->product_id);
+
+        // Check stock availability
+        $existingCart = Cart::where('product_id', $request->product_id)
+            ->where('user_id', $userId)
+            ->first();
+
+        $newTotalQty = $request->quantity + ($existingCart ? $existingCart->quantity : 0);
+
+        if ($newTotalQty > $product->stock) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Not enough stock available!'
+                ], 400);
+            }
+            return redirect()->back()->with('error', 'Not enough stock available!');
+        }
+
         Cart::updateOrCreate(
-            ['user_id' => auth()->id(), 'product_id' => $request->product_id],
+            ['user_id' => $userId, 'product_id' => $request->product_id],
             ['quantity' => DB::raw('quantity + ' . $request->quantity)]
         );
+
+        if ($request->ajax()) {
+            $cartItems = Cart::with('product')->where('user_id', $userId)->get();
+            $cartTotal = $cartItems->sum(fn($i) => $i->product->sell_price * $i->quantity);
+
+            // Generate cart HTML
+            $cartHtml = view('cashier.transactions.partials.cart-items', compact('cartItems', 'cartTotal'))->render();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Item added to cart!',
+                'cartTotal' => $cartTotal,
+                'cartCount' => $cartItems->count(),
+                'cartHtml' => $cartHtml,
+                'formattedTotal' => 'Rp' . number_format($cartTotal, 0, ',', '.')
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Item added to cart!');
     }
@@ -100,7 +137,6 @@ class TransactionController extends Controller
     public function drafts()
     {
         $drafts = Transaction::with('items.product')
-            ->where('user_id', auth()->id())
             ->where('status', 'draft')
             ->latest()
             ->get();
@@ -112,7 +148,6 @@ class TransactionController extends Controller
     public function loadDraft($id)
     {
         $draft = Transaction::with('items.product')
-            ->where('user_id', auth()->id())
             ->where('status', 'draft')
             ->findOrFail($id);
 
@@ -214,5 +249,11 @@ class TransactionController extends Controller
         });
 
         return back()->with('success', 'Refund processed.');
+    }
+
+    public function clearCart()
+    {
+        Cart::where('user_id', auth()->id())->delete();
+        return redirect()->back()->with('success', 'Cart cleared successfully.');
     }
 }

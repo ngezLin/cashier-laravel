@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @livewireStyles
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Po Depo | {{ ucfirst(Auth::user()->role) }}</title>
@@ -164,6 +166,7 @@
         <section class="content">
             <div class="container-fluid">
                 @yield('content')
+                @livewireScripts
             </div>
         </section>
     </div>

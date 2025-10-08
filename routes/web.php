@@ -27,7 +27,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('products/import', [ProductController::class, 'import'])->name('products.import');
     Route::get('/products-list', [AdminTransactionController::class, 'showProducts'])->name('products.list');
 
-    // Products & Cart
+    // Transactions
     Route::get('/cart', [AdminTransactionController::class, 'viewCart'])->name('cart');
     Route::post('/cart/add', [AdminTransactionController::class, 'addToCart'])->name('cart.add');
     Route::delete('/cart/{id}', [AdminTransactionController::class, 'removeItem'])->name('cart.remove');
@@ -35,14 +35,14 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/cart/checkout', [AdminTransactionController::class, 'checkout'])->name('cart.checkout');
     Route::post('/cart/clear', [AdminTransactionController::class, 'clearCart'])->name('cart.clear');
 
-        // Draft
+    // Draft
     Route::post('/cart/save-draft', [AdminTransactionController::class, 'saveDraft'])->name('cart.saveDraft');
     Route::post('/drafts/save', [AdminTransactionController::class, 'saveDraft'])->name('drafts.save');
 
     Route::get('/drafts', [AdminTransactionController::class, 'drafts'])->name('drafts');
     Route::post('/cart/load-draft/{id}', [AdminTransactionController::class, 'loadDraft'])->name('cart.loadDraft');
 
-        // Invoice & History
+    // Invoice & History
     Route::get('/transaction-success/{transaction}', [AdminTransactionController::class, 'success'])->name('transactions.success');
     Route::resource('transactions', AdminTransactionController::class)->only(['index', 'show']);
     Route::post('/transactions/{transaction}/refund', [AdminTransactionController::class, 'refund'])->name('transactions.refund');
@@ -65,6 +65,7 @@ Route::middleware(['auth', 'role:cashier'])->prefix('cashier')->name('cashier.')
     Route::delete('/cart/{id}', [CashierTransactionController::class, 'removeItem'])->name('cart.remove');
     Route::patch('/cart/{id}/update', [CashierTransactionController::class, 'updateQuantity'])->name('cart.update');
     Route::post('/cart/checkout', [CashierTransactionController::class, 'checkout'])->name('cart.checkout');
+    Route::post('/cart/clear', [CashierTransactionController::class, 'clearCart'])->name('cart.clear');
 
     // Draft
     Route::post('/cart/save-draft', [CashierTransactionController::class, 'saveDraft'])->name('cart.saveDraft');
